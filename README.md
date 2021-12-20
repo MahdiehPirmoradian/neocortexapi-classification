@@ -3,7 +3,7 @@
 Implementation of the classification appliction based on the neocortexapi hierarchical temporal memory (HTM) for computing correlation between sets of image after learning with HTM with Label(1 Image contain only one label).  
 This project is a collected work of thesis **htm imgclassification** by Dasu Sai Durga Sundari and SoftwareEngineering(SE) project of the same name by Long Nguyen.  
 
-![Sample output of the experiment after learning](Images\OutputExample.png "Sample output of the experiment after learning")  
+![Sample output of the experiment after learning](https://github.com/ddobric/neocortexapi-classification/blob/main/Images/OutputExample.png)  
 The Images used was collected from [Fruit 360](https://github.com/Horea94/Fruit-Images-Dataset).  
 ## Experiment Procedure:
 **1 Read the configuration and passed arguments**  
