@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ImageClassification": {
+      "commandName": "Project",
+      "commandLineArgs": "-cf htmconfig1.json -if \"InputFolder\""
+    }
+  }
+}
