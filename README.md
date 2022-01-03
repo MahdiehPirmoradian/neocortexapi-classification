@@ -31,16 +31,16 @@ This project is a collected work of thesis **htm imgclassification** by Dasu Sai
 
 When started the application will load images and start the training process. The trainingprocess runs in following steps.
 
-#### 1 Convert The Images to binary array via binarization**  
+#### (1) Convert The Images to binary array via binarization**  
 [The Binarization Library](https://github.com/daenetCorporation/imagebinarizer) was developed as an open source project at [Daenet](https://daenet.de/de/).  
 the current implementation uses a color threshold of 200 for every color in a 8bit-RGB scale.  
 The images with the same label must be stored in folder. The folder name is the images' label.   
 
-#### 2 Learn spatial patterns stored in images with the Spatial Pooler(SP)
+#### (2) Learn spatial patterns stored in images with the Spatial Pooler(SP)
 SP first iterates through all images until the stable state is entered.
 SP iterate through all the images as it learns.
 
-#### 3 Validation of SP Learning for different set of images
+#### (3) Validation of SP Learning for different set of images
 The last set of Sparse Density Representations (SDRs), the output of Spatial Pooler(SP) for each binarized image were saved for correlation validation.  
 There are 2 types of correlation which are defined as follow:
 1. *Micro Correlation*: Maximum/Average/Minimum correlation in similar bit percent of all images' SDRs which respect to each other in the same label.  
@@ -56,6 +56,5 @@ The Images used was collected from [Fruit 360](https://github.com/Horea94/Fruit-
 By changing the arguments input of Debug/General/Debug command line arguments to -cf htmconfig1.json -if "InputFolder"  
 -cf add the option of the configuration file "htmconfig1.json"
 -if add the option of the training Input Folder "InputFolder/". This folder contains folders of images, where the folder names also act as the label for the images inside it.  
-
 
 
