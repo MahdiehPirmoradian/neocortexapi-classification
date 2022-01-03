@@ -4,9 +4,6 @@ This project is the implementaiton of the command line interfaca for the image c
 
 This project is a collected work of thesis **htm imgclassification** by Dasu Sai Durga Sundari and SoftwareEngineering(SE) project of the same name by Long Nguyen at the Frankfurt University of Applied Sciences.  
 
-![Sample output of the experiment after learning](https://github.com/ddobric/neocortexapi-classification/blob/main/Images/OutputExample.png)  
-The Images used was collected from [Fruit 360](https://github.com/Horea94/Fruit-Images-Dataset).  
-
 ## How to use the classifier?
 
 **1 Prepare images 
@@ -23,8 +20,12 @@ The Images used was collected from [Fruit 360](https://github.com/Horea94/Fruit-
  
  **2 Start the application by passing required command line arguments
  ~~~
- ImageClassifier -if "InputFolder" -cf htmconfig1.json
+ ImageClassifier -if "InputFolder" -cf htmconfig.json
  ~~~
+ 
+ ### HTM Configuration
+ 
+ htmconfig.json
  
 **3 Wait on results
 
@@ -46,6 +47,10 @@ There are 2 types of correlation which are defined as follow:
 2. *Macro Correlation*: Maximum/Average/Minimum correlation in similar bit percent of all images' SDRs with images from 2 different labels.   
 The results of the two correlation are printed in the command prompt when executing the code  
 
+Result example:
+
+![Sample output of the experiment after learning](https://github.com/ddobric/neocortexapi-classification/blob/main/Images/OutputExample.png)  
+The Images used was collected from [Fruit 360](https://github.com/Horea94/Fruit-Images-Dataset).  
 ### How to run the application in Visual Studio
 
 By changing the arguments input of Debug/General/Debug command line arguments to -cf htmconfig1.json -if "InputFolder"  
