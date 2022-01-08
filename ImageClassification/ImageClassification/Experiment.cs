@@ -35,8 +35,7 @@ namespace ConsoleApp
 
             HelpersTemp helperFunc = new HelpersTemp();
 
-            Dictionary<string, double> microCorrelation = new();
-            Dictionary<string, double> macroCorrelation = new();
+            Dictionary<string, double> listCorrelation = new();
 
             foreach (KeyValuePair<string, List<string>> entry in inputsPath) // loop of the folder (classes) eg: Apple, banana, etc
             {
@@ -47,46 +46,28 @@ namespace ConsoleApp
                 for (int i = 0; i < numberOfImages; i++) // loop of the images inside the folder
                 {
                     if (!sdrs.TryGetValue(filePathList[i], out int[] sdr1)) continue;
-
+                    
                     foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { // loop of the folder (again)
                         var classLabel2 = secondEntry.Key;
                         var filePathList2 = secondEntry.Value;
                         var numberOfImages2 = filePathList2.Count;
-
-                        if (classLabel.Equals(classLabel2))
-                        {
-                            // Microcorrelation
-                            for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
+                        for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
                             {
                                 if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
-
                                 string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
                                 string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                                 string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
-                                microCorrelation[temp] = MathHelpers.CalcArraySimilarity(sdr1, sdr2);
-                            }
-                        } else
-                        {
-                            // Macrocorrelation
-                            for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
-                            {
-                                if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
-
-                                string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
-                                string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
-                                string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
-
-                                macroCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
-                            }
+                                listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
                         }
                     }
                 }
             }
 
             var classes = inputsPath.Keys.ToList();
-            helperFunc.printSimilarityMatrix(microCorrelation, "micro", classes);
-            helperFunc.printSimilarityMatrix(macroCorrelation, "macro", classes);
+            helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
+            helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
+            helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
         }
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
@@ -219,7 +200,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 1000;
+            int maxSPLearningCycles = 1;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
