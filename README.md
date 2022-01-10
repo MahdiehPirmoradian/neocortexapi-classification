@@ -9,12 +9,14 @@ This project is a collected work of thesis **htm imgclassification** by Dasu Sai
 ### 1 Prepare images 
  
  Before you start you need to prepare images that are required for the training. Images must be copied in the following folder structure:
- 
+
+~~~
  c:\Temp\TrainingImages
  c:\Temp\TrainingImages\Item1
  c:\Temp\TrainingImages\Item1\Image1
  ...
  c:\Temp\TrainingImages\Item1\Image1N
+ ~~~
  
  TODO
  
