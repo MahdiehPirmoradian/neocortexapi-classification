@@ -2,7 +2,7 @@
   "profiles": {
     "ImageClassification": {
       "commandName": "Project",
-      "commandLineArgs": "-cf htmconfig1.json -if \"InputFolder\""
+      "commandLineArgs": "-cf htmconfig.json -if \"InputFolder\""
     }
   }
 }

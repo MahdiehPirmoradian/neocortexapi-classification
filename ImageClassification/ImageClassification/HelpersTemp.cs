@@ -19,6 +19,10 @@ namespace ConsoleApp
                     var dic = filtered.Where(p =>
                     {
                         var hKey = p.Key.Split("__");
+                        if (hKey[0] == hKey[1])
+                        {
+                            return false;
+                        }
                         if (hKey[0].Contains(label1) && hKey[1].Contains(label2))
                         {
                             return true;
@@ -44,7 +48,18 @@ namespace ConsoleApp
             filtered = temp.ToDictionary(p => p.Key, p => p.Value);
             foreach(string label in classes)
             {
-                var dic = filtered.Where(p => p.Key.Contains(label));
+                var dic = filtered.Where(p => {
+                    var hKey = p.Key.Split("__");
+                    if (hKey[0] == hKey[1])
+                    {
+                        return false;
+                    }
+                    if(p.Key.Contains(label)) 
+                    { 
+                        return true;
+                    }
+                    return false;
+                    });
                 var values = dic.ToDictionary(p => p.Key, p => p.Value).Values.ToList();
                 var tempStat = new Dictionary<string, double>();
                 tempStat["Max"] = values.Max();
