@@ -92,7 +92,7 @@ namespace ConsoleApp
 
                     inputsPath[folderName].Add(filePath);
 
-                    // Image binarization
+                    // Image binarization, inputVector means SDR
                     int[] inputVector = ReadImageData(filePath, height, width);
                     binaries.Add(filePath, inputVector);
 
@@ -134,6 +134,9 @@ namespace ConsoleApp
             var hg = doubleArray.GetLength(1);
             var wd = doubleArray.GetLength(0);
             var intArray = new int[hg*wd];
+
+            //we convert this binary array into an integer array
+            //because we use Hierarchichal Temporal Memory which use SDR and they are always Integers
             for (int j = 0; j < hg; j++)
             {
                 for (int i = 0;i< wd;i++)
