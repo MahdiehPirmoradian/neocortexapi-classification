@@ -1,0 +1,3 @@
+change "PotentialRadius": 30, in htmconfig.json 
+to
+"PotentialRadius": 15. 
