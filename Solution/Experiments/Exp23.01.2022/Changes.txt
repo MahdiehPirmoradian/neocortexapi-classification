@@ -1,4 +1,4 @@
+"PotentialRadius": 30.
 change in htmconfig.json  InhibitionRadius": 1,
 to
-"PotentialRadius": 30. 
 InhibitionRadius": 15,
