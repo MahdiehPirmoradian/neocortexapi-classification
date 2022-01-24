@@ -1,0 +1,2 @@
+"PotentialRadius": 30
+InhibitionRadius": 1
