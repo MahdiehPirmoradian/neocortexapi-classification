@@ -36,7 +36,7 @@ namespace ConsoleApp
             HelpersTemp helperFunc = new HelpersTemp();
 
             Dictionary<string, double> listCorrelation = new();
-
+            Dictionary<string, double> listInputCorrelation = new();
             foreach (KeyValuePair<string, List<string>> entry in inputsPath) // loop of the folder (classes) eg: Apple, banana, etc
             {
                 var classLabel = entry.Key;
@@ -59,6 +59,7 @@ namespace ConsoleApp
                                 string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
                                 listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
+                                listInputCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(binaries[filePathList[i]].IndexWhere((el) => el == 1), binaries[filePathList2[j]].IndexWhere((el) => el == 1)));
                         }
                     }
                 }
@@ -94,19 +95,31 @@ namespace ConsoleApp
 
                     // Image binarization
                     int[] inputVector = ReadImageData(filePath, height, width);
-                    binaries.Add(filePath, inputVector);
-
+                    string[] savedVector = ConvertToString(inputVector, height, width);
                     // Write binarized data to a file
                     var baseDir = Path.GetDirectoryName(filePath);
                     var fileNameWithoutExt = Path.GetFileNameWithoutExtension(filePath);
                     var ext = "txt";
 
                     var fullFileName = $"{fileNameWithoutExt}.{ext}";
-
-                    System.IO.File.WriteAllLines(Path.Combine(baseDir, fullFileName), inputVector.Select(tb => tb.ToString()));
+                    binaries.Add(filePath, inputVector);
+                    System.IO.File.WriteAllLines(Path.Combine(baseDir, fullFileName), savedVector);
                 }
             }
             return Tuple.Create(binaries, inputsPath);
+        }
+
+        private string[] ConvertToString(int[] inputVector, int height, int width)
+        {
+            string[] vs = new string[width];
+            for (int j = 0; j < height; j++)
+            {
+                for (int i = 0; i < width; i++)
+                {
+                    vs[i] += inputVector[j * width + i].ToString()+',';
+                }
+            }
+            return vs;
         }
 
         /// <summary>
