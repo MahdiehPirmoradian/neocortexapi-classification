@@ -26,7 +26,8 @@ namespace ConsoleApp
             // By default it only returns subdirectories one level deep. 
             var directories = Directory.GetDirectories(expConfig.inputFolder).ToList();
 
-            (   Dictionary<string, int[]> binaries, // List of Binarized images
+            (   // List of Binarized images
+                Dictionary<string, int[]> binaries, 
                 Dictionary<string, List<string>> inputsPath // Path of the list of images found in the given folder
             )   = imageBinarization(directories, width, height);
 
@@ -37,21 +38,26 @@ namespace ConsoleApp
 
             Dictionary<string, double> listCorrelation = new();
 
-            foreach (KeyValuePair<string, List<string>> entry in inputsPath) // loop of the folder (classes) eg: Apple, banana, etc
+            // loop of the folder (classes) eg: Apple, banana, etc
+            foreach (KeyValuePair<string, List<string>> entry in inputsPath) 
             {
                 var classLabel = entry.Key;
                 var filePathList = entry.Value;
                 var numberOfImages = filePathList.Count;
 
-                for (int i = 0; i < numberOfImages; i++) // loop of the images inside the folder
+                // loop of the images inside the folder
+                for (int i = 0; i < numberOfImages; i++) 
                 {
                     if (!sdrs.TryGetValue(filePathList[i], out int[] sdr1)) continue;
                     
-                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { // loop of the folder (again)
+                    // loop of the folder (again)
+                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { 
                         var classLabel2 = secondEntry.Key;
                         var filePathList2 = secondEntry.Value;
                         var numberOfImages2 = filePathList2.Count;
-                        for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
+
+                        // loop of the images inside the folder
+                        for (int j = 0; j < numberOfImages2; j++) 
                             {
                                 if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
                                 string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
