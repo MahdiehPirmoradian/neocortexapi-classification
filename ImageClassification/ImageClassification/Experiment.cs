@@ -26,8 +26,7 @@ namespace ConsoleApp
             // By default it only returns subdirectories one level deep. 
             var directories = Directory.GetDirectories(expConfig.inputFolder).ToList();
 
-            (   // List of Binarized images
-                Dictionary<string, int[]> binaries, 
+            (   Dictionary<string, int[]> binaries, // List of Binarized images
                 Dictionary<string, List<string>> inputsPath // Path of the list of images found in the given folder
             )   = imageBinarization(directories, width, height);
 
@@ -37,27 +36,22 @@ namespace ConsoleApp
             HelpersTemp helperFunc = new HelpersTemp();
 
             Dictionary<string, double> listCorrelation = new();
-
-            // loop of the folder (classes) eg: Apple, banana, etc
-            foreach (KeyValuePair<string, List<string>> entry in inputsPath) 
+            Dictionary<string, double> listInputCorrelation = new();
+            foreach (KeyValuePair<string, List<string>> entry in inputsPath) // loop of the folder (classes) eg: Apple, banana, etc
             {
                 var classLabel = entry.Key;
                 var filePathList = entry.Value;
                 var numberOfImages = filePathList.Count;
 
-                // loop of the images inside the folder
-                for (int i = 0; i < numberOfImages; i++) 
+                for (int i = 0; i < numberOfImages; i++) // loop of the images inside the folder
                 {
                     if (!sdrs.TryGetValue(filePathList[i], out int[] sdr1)) continue;
                     
-                    // loop of the folder (again)
-                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { 
+                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { // loop of the folder (again)
                         var classLabel2 = secondEntry.Key;
                         var filePathList2 = secondEntry.Value;
                         var numberOfImages2 = filePathList2.Count;
-
-                        // loop of the images inside the folder
-                        for (int j = 0; j < numberOfImages2; j++) 
+                        for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
                             {
                                 if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
                                 string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
@@ -65,7 +59,7 @@ namespace ConsoleApp
                                 string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
                                 listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
-                                
+                                listInputCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(binaries[filePathList[i]].IndexWhere((el) => el == 1), binaries[filePathList2[j]].IndexWhere((el) => el == 1)));
                         }
                     }
                 }
@@ -74,7 +68,8 @@ namespace ConsoleApp
             var classes = inputsPath.Keys.ToList();
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
-            helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
+            //helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
+            Console.WriteLine(listInputCorrelation["Applepic1__Applepic2"]);
         }
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
@@ -101,19 +96,31 @@ namespace ConsoleApp
 
                     // Image binarization, inputVector means SDR
                     int[] inputVector = ReadImageData(filePath, height, width);
-                    binaries.Add(filePath, inputVector);
-
+                    string[] savedVector = ConvertToString(inputVector, height, width);
                     // Write binarized data to a file
                     var baseDir = Path.GetDirectoryName(filePath);
                     var fileNameWithoutExt = Path.GetFileNameWithoutExtension(filePath);
                     var ext = "txt";
 
                     var fullFileName = $"{fileNameWithoutExt}.{ext}";
-
-                    System.IO.File.WriteAllLines(Path.Combine(baseDir, fullFileName), inputVector.Select(tb => tb.ToString()));
+                    binaries.Add(filePath, inputVector);
+                    System.IO.File.WriteAllLines(Path.Combine(baseDir, fullFileName), savedVector);
                 }
             }
             return Tuple.Create(binaries, inputsPath);
+        }
+
+        private string[] ConvertToString(int[] inputVector, int height, int width)
+        {
+            string[] vs = new string[width];
+            for (int j = 0; j < height; j++)
+            {
+                for (int i = 0; i < width; i++)
+                {
+                    vs[i] += inputVector[j * width + i].ToString()+',';
+                }
+            }
+            return vs;
         }
 
         /// <summary>
@@ -131,9 +138,9 @@ namespace ConsoleApp
                 InputImagePath = imagePath,
                 ImageHeight = height,
                 ImageWidth = width,
-                BlueThreshold = 200,
-                RedThreshold = 200,
-                GreenThreshold = 200
+                //BlueThreshold = 200,
+                //RedThreshold = 200,
+                //GreenThreshold = 200
             };
             ImageBinarizer bizer = new ImageBinarizer(parameters);
 
@@ -210,7 +217,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 1000;
+            int maxSPLearningCycles = 1;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
