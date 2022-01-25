@@ -13,3 +13,9 @@ to
     64,
     64
   ],
+
+and
+change
+LocalAreaDensity": 0.1,
+to 
+LocalAreaDensity": 0.3,
