@@ -65,6 +65,7 @@ namespace ConsoleApp
                                 string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
                                 listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
+                                
                         }
                     }
                 }
