@@ -31,7 +31,9 @@ namespace ConsoleApp
             )   = imageBinarization(directories, width, height);
 
             // The key of the dictionary helps to keep track of which class the SDR belongs to
-            Dictionary<string, int[]> sdrs = SPTrain(htmConfig, binaries);
+            
+            (Dictionary<string, int[]> sdrs,var cortexLayer) = SPTrain(htmConfig, binaries);
+            //(Dictionary<string, int[]> sdrs2, var cortexLayer2) = SPTrain(htmConfig, binaries, colorThreshold );
 
             HelpersTemp helperFunc = new HelpersTemp();
 
@@ -70,6 +72,22 @@ namespace ConsoleApp
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
             Console.WriteLine(listInputCorrelation["Applepic1__Applepic2"]);
+
+
+            // Prediction Code
+            // input image encoding
+            int[] encodedInputImage = ReadImageData("inputImagePathForTest.png",width,height);
+            var temp1 = cortexLayer.Compute(encodedInputImage, false);
+
+            // This is a general way to get the SpatialPooler result from the layer.
+            var activeColumns = cortexLayer.GetResult("sp") as int[];
+
+            var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
+            
+            // Function that needs implementation
+            //string predictedLabel =  PredictLabel(sdrOfInputImage, sdrs);
+
+            Console.WriteLine($"The image is preedicted as {predictedLabel}");
         }
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
@@ -162,7 +180,7 @@ namespace ConsoleApp
         /// </summary>
         /// <param name="cfg"></param> Spatial Pooler configuration by HtmConfig style
         /// <param name="inputValues"></param> Binary input vector (pattern) list
-        private static Dictionary<string, int[]> SPTrain(HtmConfig cfg, Dictionary<string, int[]> inputValues)
+        private static (Dictionary<string, int[]>,CortexLayer<object, object> cortexLayer) SPTrain(HtmConfig cfg, Dictionary<string, int[]> inputValues)
         {
             // Creates the htm memory.
             var mem = new Connections(cfg);
@@ -247,7 +265,7 @@ namespace ConsoleApp
                 if (isInStableState)
                     break;
             }
-            return outputValues;
+            return (outputValues,cortexLayer);
         }
     }
 }
