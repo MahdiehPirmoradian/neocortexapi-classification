@@ -1,0 +1,15 @@
+"PotentialRadius": 30
+InhibitionRadius": 1 
+
+change 
+"InputDimensions": [
+    100,
+    100
+  ],
+
+to
+
+"InputDimensions": [
+    64,
+    64
+  ],
