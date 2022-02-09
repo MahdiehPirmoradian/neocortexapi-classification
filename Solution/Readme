@@ -1,3 +1,6 @@
+This work is a new approach to image classification based on HTM algorithm.
+
+
 In the previous work at the university an Image Classification solution has been implemented. 
 Your task is to implement a program that uses the existing solution (add reference to it) as a library and start a training of learning images. 
 You are free to design or find the experiment image data to be used in the experiment. This can be plants, animals or whatever.
