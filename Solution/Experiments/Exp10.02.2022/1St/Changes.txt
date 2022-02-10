@@ -1,0 +1,22 @@
+"PotentialRadius": 30
+InhibitionRadius": 1 
+ 
+"InputDimensions": [
+    100,
+    100
+  ],
+
+to
+
+"InputDimensions": [
+    64,
+    64
+  ],
+
+
+change 
+"LocalAreaDensity": 0.1,
+
+to
+
+"LocalAreaDensity": 0.3,
