@@ -6,7 +6,7 @@
   "ColumnTopology": null,
   "NumInputs": 1,
   "NumColumns": 0,
-  "PotentialRadius": 15,
+  "PotentialRadius": 30,
   "PotentialPct": 0.5,
   "StimulusThreshold": 0.0,
   "SynPermBelowStimulusInc": 0.01,
@@ -15,7 +15,7 @@
   "SynPermConnected": 0.1,
   "WrapAround": true,
   "GlobalInhibition": false,
-  "LocalAreaDensity": 0.1,
+  "LocalAreaDensity": 0.6,
   "SynPermTrimThreshold": 0.05,
   "SynPermMax": 1.0,
   "SynPermMin": 0.0,
@@ -39,8 +39,8 @@
   ],
   "CellsPerColumn": 16,
   "InputDimensions": [
-    100,
-    100
+    64,
+    64
   ],
   "MaxNewSynapseCount": 20,
   "MaxSegmentsPerCell": 225,
