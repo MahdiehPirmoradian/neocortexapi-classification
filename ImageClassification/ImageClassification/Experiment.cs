@@ -70,14 +70,14 @@ namespace ConsoleApp
             var classes = inputsPath.Keys.ToList();
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
-            //helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
+            helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
             Console.WriteLine(listInputCorrelation["Applepic1__Applepic2"]);
 
 
             // Prediction Code
             // input image encoding
-            int[] encodedInputImage = ReadImageData("inputImagePathForTest.png",width,height);
-            var temp1 = cortexLayer.Compute(encodedInputImage, false);
+            // int[] encodedInputImage = ReadImageData("inputImagePathForTest.png",width,height);
+            // var temp1 = cortexLayer.Compute(encodedInputImage, false);
 
             // This is a general way to get the SpatialPooler result from the layer.
             var activeColumns = cortexLayer.GetResult("sp") as int[];
