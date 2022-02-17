@@ -87,7 +87,7 @@ namespace ConsoleApp
             // Function that needs implementation
             //string predictedLabel =  PredictLabel(sdrOfInputImage, sdrs);
 
-            Console.WriteLine($"The image is preedicted as {predictedLabel}");
+            //Console.WriteLine($"The image is predicted as {predictedLabel}");
         }
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
@@ -253,7 +253,7 @@ namespace ConsoleApp
                     // Learn the input pattern.
                     // Output lyrOut is the output of the last module in the layer.
 
-                    var lyrOut = cortexLayer.Compute(input.Value, true);
+                    var lyrOut = cortexLayer.Compute(input.Value, true) as ComputeCycle;
 
                     // This is a general way to get the SpatialPooler result from the layer.
                     var activeColumns = cortexLayer.GetResult("sp") as int[];
