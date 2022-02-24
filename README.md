@@ -23,7 +23,7 @@ Each Imageset is stored inside a folder whose name is the set's label.
  Sample input folder of the project can be found [here](ImageClassification/ImageClassification/InputFolder)  
  ### 2 Start the application by passing required command line arguments
  ~~~
- ImageClassifier -if "InputFolder" -cf htmconfig.json
+ ImageClassification -if "InputFolder" -cf htmconfig.json
  ~~~
  -if   "Input Images folder path"  
  -cf   "json htm config file path"  
