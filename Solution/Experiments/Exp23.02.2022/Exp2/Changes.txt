@@ -1,0 +1,11 @@
+"PotentialRadius": 30
+InhibitionRadius": 1 
+ 
+
+change 
+"LocalAreaDensity": 0.1,
+
+to
+
+"LocalAreaDensity": 0.9,
+
