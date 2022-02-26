@@ -31,9 +31,13 @@ namespace ConsoleApp
             )   = imageBinarization(directories, width, height);
 
             // The key of the dictionary helps to keep track of which class the SDR belongs to
+
+
             Dictionary<string, int[]> sdrs = SPTrain(htmConfig, binaries);
 
+
             HelpersTemp helperFunc = new HelpersTemp();
+
 
             Dictionary<string, double> listCorrelation = new();
 
