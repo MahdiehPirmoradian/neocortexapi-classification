@@ -72,7 +72,7 @@ namespace ConsoleApp
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
-            Console.WriteLine(listInputCorrelation["Applepic1__Applepic2"]);
+            Console.WriteLine(listInputCorrelation["Hexagonh1__Hexagonh2"]);
 
 
             // Prediction Code
