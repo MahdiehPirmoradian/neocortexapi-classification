@@ -19,20 +19,20 @@ namespace ConsoleApp
         }
 
         public void run()
-        { 
+        {
             int height = htmConfig.InputDimensions[0];
             int width = htmConfig.InputDimensions[1];
 
             // By default it only returns subdirectories one level deep. 
             var directories = Directory.GetDirectories(expConfig.inputFolder).ToList();
 
-            (   Dictionary<string, int[]> binaries, // List of Binarized images
+            (Dictionary<string, int[]> binaries, // List of Binarized images
                 Dictionary<string, List<string>> inputsPath // Path of the list of images found in the given folder
-            )   = imageBinarization(directories, width, height);
+            ) = imageBinarization(directories, width, height);
 
             // The key of the dictionary helps to keep track of which class the SDR belongs to
-            
-            (Dictionary<string, int[]> sdrs,var cortexLayer) = SPTrain(htmConfig, binaries);
+
+            (Dictionary<string, int[]> sdrs, var cortexLayer) = SPTrain(htmConfig, binaries);
             //(Dictionary<string, int[]> sdrs2, var cortexLayer2) = SPTrain(htmConfig, binaries, colorThreshold );
 
             HelpersTemp helperFunc = new HelpersTemp();
@@ -49,20 +49,21 @@ namespace ConsoleApp
                 for (int i = 0; i < numberOfImages; i++) // loop of the images inside the folder
                 {
                     if (!sdrs.TryGetValue(filePathList[i], out int[] sdr1)) continue;
-                    
-                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { // loop of the folder (again)
+
+                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
+                    { // loop of the folder (again)
                         var classLabel2 = secondEntry.Key;
                         var filePathList2 = secondEntry.Value;
                         var numberOfImages2 = filePathList2.Count;
                         for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
-                            {
-                                if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
-                                string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
-                                string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
-                                string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
+                        {
+                            if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
+                            string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
+                            string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
+                            string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
-                                listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
-                                listInputCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(binaries[filePathList[i]].IndexWhere((el) => el == 1), binaries[filePathList2[j]].IndexWhere((el) => el == 1)));
+                            listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
+                            listInputCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(binaries[filePathList[i]].IndexWhere((el) => el == 1), binaries[filePathList2[j]].IndexWhere((el) => el == 1)));
                         }
                     }
                 }
@@ -72,23 +73,63 @@ namespace ConsoleApp
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
-            Console.WriteLine(listInputCorrelation["Hexagonh1__Hexagonh2"]);
+            //Console.WriteLine(listInputCorrelation["Hexagonh1__Hexagonh2"]);
 
 
             // Prediction Code
             // input image encoding
-            // int[] encodedInputImage = ReadImageData("inputImagePathForTest.png",width,height);
-            // var temp1 = cortexLayer.Compute(encodedInputImage, false);
+             int[] encodedInputImage = ReadImageData("C:/Users/omiid/Desktop/New folder/A.jpg", width,height);
+             var temp1 = cortexLayer.Compute(encodedInputImage, false);
 
             // This is a general way to get the SpatialPooler result from the layer.
             var activeColumns = cortexLayer.GetResult("sp") as int[];
 
             var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
-            
-            // Function that needs implementation
-            //string predictedLabel =  PredictLabel(sdrOfInputImage, sdrs);
 
-            //Console.WriteLine($"The image is predicted as {predictedLabel}");
+
+             string PredictLabel(int[] sdrOfInputImage, Dictionary<string, int[]> sdrs)
+            {
+                double x = 0;
+                double y = 0;
+                string category= "";
+                foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
+                { // loop of each folder in input folder
+                    var classLabel2 = secondEntry.Key;
+                    var filePathList2 = secondEntry.Value;
+                    var numberOfImages2 = filePathList2.Count;
+                    for (int j = 0; j < numberOfImages2; j++) // loop of each image in each category of inputs
+                    {
+                        if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
+                        string fileNameofFirstImage = Path.GetFileNameWithoutExtension("C:/Users/omiid/Desktop/New folder/A.jpg");
+                        string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
+                        string temp = $"{"entered image" + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
+
+
+                        //calculating the similarity of tu current itterated image with the input image
+                        x = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
+
+
+                        //if the similarity of input image with the rightnow-itterated image is more than the similarity of the input image and last itterated image
+                        if (x > y)
+                        {
+                            y = x;
+                            category = secondEntry.Key;
+
+                        }
+
+
+                    }
+                }
+                //mentioning the highest similarity of the input image with the iterated images
+                Console.WriteLine("Similarity: "+x );
+                return category;
+
+            }
+
+            // calling the prediction function and puting its output in "predictedLable" varriable
+            string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
+            //mentioning the category to which the input image has te mot smilarity
+            Console.WriteLine($"The image is predicted as {predictedLabel}");
         }
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
