@@ -74,10 +74,10 @@ namespace ConsoleApp
             Console.WriteLine(listInputCorrelation["Hexagonh1__Hexagonh2"]);
 
 
-            // Prediction Code
+             //Prediction Code
             // input image encoding
-            // int[] encodedInputImage = ReadImageData("inputImagePathForTest.png",width,height);
-            // var temp1 = cortexLayer.Compute(encodedInputImage, false);
+            int[] encodedInputImage = ReadImageData("C:/Users/Tarla/Desktop/H/h2.jpg", width,height);
+            var temp1 = cortexLayer.Compute(encodedInputImage, false);
 
             // This is a general way to get the SpatialPooler result from the layer.
             var activeColumns = cortexLayer.GetResult("sp") as int[];
