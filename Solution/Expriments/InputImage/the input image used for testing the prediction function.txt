@@ -1,0 +1,1 @@
+the input image used for testing the prediction function, is a triangle, but none of the triangles used in training
