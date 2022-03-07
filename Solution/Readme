@@ -14,5 +14,7 @@ NumofActiveColumnsPerInArea.
 Demonstrate how these parameters influence the learning. 
 Your code must provide the learning code and prediction code. After learning user should use your code and test the quality of learning. 
 For example, the user after learning enter the image “table”. The prediction code provide a set of predicting results like: “Table – 87%, chair 7%, light - 3%”.
+… 
+Our code must provide Learning and Prediction code
 
 WE are working on the prediction code
