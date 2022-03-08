@@ -95,9 +95,16 @@ namespace ConsoleApp
             {
                 double x = 0;
                 double y = 0;
+                double d = 0;
                 string category = "";
+
+                
+                string category1 = "";
+
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
-                { // loop of each folder in input folder
+                {
+                    double z = 0;
+                    // loop of each folder in input folder
                     var classLabel2 = secondEntry.Key;
                     var filePathList2 = secondEntry.Value;
                     var numberOfImages2 = filePathList2.Count;
@@ -109,23 +116,35 @@ namespace ConsoleApp
                         string temp = $"{"entered image" + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
 
-                        //calculating the similarity of tu current itterated image with the input image
+                        //calculating the similarity of the current itterated image with the input image
                         x = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
-
+                        z += x;
 
                         //if the similarity of input image with the rightnow-itterated image is more than the similarity of the input image and last itterated image
                         if (x > y)
                         {
                             y = x;
                             category = secondEntry.Key;
-
+                            
                         }
-
+                       
+                        //calculating the similarity of the current itterated image with the input image
+                        
 
                     }
+                    z /= 4;
+                    
+                    if (z > d)
+                    {
+                        d = z;
+                    }
+                    Console.WriteLine("Similarity: To Category  " + secondEntry.Key + "  " +z);
                 }
+
+
+                
                 //mentioning the highest similarity of the input image with the iterated images
-                Console.WriteLine("Similarity: " + x);
+                Console.WriteLine("Similarity: " + d);
                 return category;
 
             }
