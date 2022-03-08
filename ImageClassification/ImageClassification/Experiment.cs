@@ -74,11 +74,14 @@ namespace ConsoleApp
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
             //Console.WriteLine(listInputCorrelation["Hexagonh1__Hexagonh2"]);
-
+            Console.WriteLine("INPUTCorrelation-H1-H2: " + listInputCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("INPUTCorrelation-H1-T1: " + listInputCorrelation["Hexagonh1__TriangleT1"]);
+            Console.WriteLine("CorrelationH1-H2  (output): " + listCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("CorrelationH1-T1  (output): " + listCorrelation["Hexagonh1__TriangleT1"]);
 
             // Prediction Code
             // input image encoding
-             int[] encodedInputImage = ReadImageData("C:/Users/omiid/Desktop/New folder/A.jpg", width,height);
+            int[] encodedInputImage = ReadImageData("C:/Users/omiid/Desktop/New folder/A.jpg", width,height);
              var temp1 = cortexLayer.Compute(encodedInputImage, false);
 
             // This is a general way to get the SpatialPooler result from the layer.
@@ -89,9 +92,13 @@ namespace ConsoleApp
 
              string PredictLabel(int[] sdrOfInputImage, Dictionary<string, int[]> sdrs)
             {
+                int num = 0;
                 double x = 0;
                 double y = 0;
-                string category= "";
+                string category = "";
+                int[] Hexagon = new int[4]; ;
+                int[] Triangle = new int[4];
+                int[] StraightCross = new int[4];
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
                 { // loop of each folder in input folder
                     var classLabel2 = secondEntry.Key;
@@ -108,20 +115,44 @@ namespace ConsoleApp
                         //calculating the similarity of tu current itterated image with the input image
                         x = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
 
+                        //creating arrays to store similarity values, to be able to pick the highest for each category in the end
+                        num = Convert.ToInt32(x);
+                        category = secondEntry.Key;
 
-                        //if the similarity of input image with the rightnow-itterated image is more than the similarity of the input image and last itterated image
-                        if (x > y)
+                        if (category == "Hexagon")
                         {
-                            y = x;
-                            category = secondEntry.Key;
-
+                            Hexagon[j] = num;
                         }
+                        else if (category == "Triangle")
+                        {
+                            Triangle[j] = num;
+                        }
+                        else { StraightCross[j] = num; }
+
+
+
+                        ////if the similarity of input image with the rightnow-itterated image is more than the similarity of the input image and last itterated image
+                        //if (x > y)
+                        //{
+                        //    y = x;
+                        //    category = secondEntry.Key;
+
+                        //}
 
 
                     }
                 }
                 //mentioning the highest similarity of the input image with the iterated images
-                Console.WriteLine("Similarity: "+x );
+                
+                Console.WriteLine("list of similarities to Hexagon category:");
+                Hexagon.ToList().ForEach(Console.WriteLine);
+                Console.WriteLine("MaxSimilarity to Hexagon = " + Hexagon.Max());
+                Console.WriteLine("list of similarities to Triangle Category:");
+                Triangle.ToList().ForEach(Console.WriteLine);
+                Console.WriteLine("MaxSimilarity to Triangle = " + Triangle.Max());
+                Console.WriteLine("list of similarities to StraightCross Category:");
+                StraightCross.ToList().ForEach(Console.WriteLine);
+                Console.WriteLine("MaxSimilarity to StraightCross = " + StraightCross.Max());
                 return category;
 
             }
@@ -261,7 +292,7 @@ namespace ConsoleApp
             // Initializes the Spatial Pooler 
             sp.Init(mem, new DistributedMemory() { ColumnDictionary = new InMemoryDistributedDictionary<int, NeoCortexApi.Entities.Column>(1) });
 
-            // mem.TraceProximalDendritePotential(true);
+            //mem.TraceProximalDendritePotential(true);
 
             // It creates the instance of the neo-cortex layer.
             // Algorithm will be performed inside of that layer.
