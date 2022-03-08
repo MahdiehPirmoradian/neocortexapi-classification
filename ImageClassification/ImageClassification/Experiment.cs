@@ -25,7 +25,7 @@ namespace ConsoleApp
 
             // By default it only returns subdirectories one level deep. 
             var directories = Directory.GetDirectories(expConfig.inputFolder).ToList();
-
+            
             (   Dictionary<string, int[]> binaries, // List of Binarized images
                 Dictionary<string, List<string>> inputsPath // Path of the list of images found in the given folder
             )   = imageBinarization(directories, width, height);
@@ -73,7 +73,7 @@ namespace ConsoleApp
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
-            Console.WriteLine(listInputCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("Hexagonh1__Hexagonh2 crrelation: "+listInputCorrelation["Hexagonh1__Hexagonh2"]);
 
 
              //Prediction Code
@@ -264,7 +264,7 @@ namespace ConsoleApp
             // Initializes the Spatial Pooler 
             sp.Init(mem, new DistributedMemory() { ColumnDictionary = new InMemoryDistributedDictionary<int, NeoCortexApi.Entities.Column>(1) });
 
-             mem.TraceProximalDendritePotential(true);
+             //mem.TraceProximalDendritePotential(true);
 
             // It creates the instance of the neo-cortex layer.
             // Algorithm will be performed inside of that layer.
