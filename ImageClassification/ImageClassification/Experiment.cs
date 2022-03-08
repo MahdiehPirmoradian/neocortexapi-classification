@@ -138,13 +138,13 @@ namespace ConsoleApp
                     {
                         d = z;
                     }
-                    Console.WriteLine("Similarity: To Category  " + secondEntry.Key + "  " +z);
+                    Console.WriteLine("\nSimilarity: To Category  " + secondEntry.Key + "  " +z);
                 }
 
 
                 
                 //mentioning the highest similarity of the input image with the iterated images
-                Console.WriteLine("Similarity: " + d);
+                Console.WriteLine("\nSimilarity: " + d);
                 return category;
 
             }
