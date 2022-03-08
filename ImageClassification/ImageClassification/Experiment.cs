@@ -73,10 +73,11 @@ namespace ConsoleApp
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
-            Console.WriteLine("Hexagonh1__Hexagonh2 crrelation: "+listInputCorrelation["Hexagonh1__Hexagonh2"]);
-
-
-             //Prediction Code
+            Console.WriteLine("INPUTCorrelation__Hexagonh1__Hexagonh2 : " + listInputCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("InputCorrelation__Hexagonh1__TriangleT1 : " + listInputCorrelation["Hexagonh1__TriangleT1"]);
+            Console.WriteLine("OutputCorrelation__Hexagonh1__Hexagonh2 : " + listCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("OutputCorrelation__Hexagonh1__TriangleT1 : " + listCorrelation["Hexagonh1__TriangleT1"]);
+            //Prediction Code
             // input image encoding
             int[] encodedInputImage = ReadImageData("C:/Users/Tarla/Desktop/Input/B.jpg", width,height);
             var temp1 = cortexLayer.Compute(encodedInputImage, false);
@@ -103,7 +104,7 @@ namespace ConsoleApp
                     for (int j = 0; j < numberOfImages2; j++) // loop of each image in each category of inputs
                     {
                         if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
-                        string fileNameofFirstImage = Path.GetFileNameWithoutExtension("C:/Users/omiid/Desktop/New folder/A.jpg");
+                        string fileNameofFirstImage = Path.GetFileNameWithoutExtension("C:/Users/Tarla/Desktop/Input/B.jpg");
                         string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                         string temp = $"{"entered image" + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
@@ -280,7 +281,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 1;
+            int maxSPLearningCycles = 2;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
