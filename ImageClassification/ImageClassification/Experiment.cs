@@ -98,9 +98,6 @@ namespace ConsoleApp
                 double d = 0;
                 string category = "";
 
-                
-                string category1 = "";
-
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
                 {
                     double z = 0;
@@ -120,18 +117,17 @@ namespace ConsoleApp
                         x = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
                         z += x;
 
-                        //if the similarity of input image with the rightnow-itterated image is more than the similarity of the input image and last itterated image
+                        //if the similarity of input image with the right now-itterated image is more than
+                        //the similarity of the input image and last itterated image
                         if (x > y)
                         {
                             y = x;
                             category = secondEntry.Key;
                             
                         }
-                       
-                        //calculating the similarity of the current itterated image with the input image
-                        
-
+  
                     }
+                    //calculating the Average similarity of the Test_Image with the current category of Images
                     z /= 4;
                     
                     if (z > d)
@@ -300,7 +296,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 2;
+            int maxSPLearningCycles = 1000;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
@@ -309,7 +305,7 @@ namespace ConsoleApp
             {
                 Console.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
 
-                int iteration = 1000;
+                int iteration = 0;
                 outputValues.Clear(); // Remove all elements in output SDR list
 
                 // This trains the layer on input pattern.
