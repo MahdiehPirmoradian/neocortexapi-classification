@@ -42,8 +42,10 @@ namespace ConsoleApp
             )   = imageBinarization(directories, width, height);
 
             // The key of the dictionary helps to keep track of which class the SDR belongs to
-            
+
+            //In the case of Black & White Pictures we use this line for training the Spatial Pooler
             (Dictionary<string, int[]> sdrs,var cortexLayer) = SPTrain(htmConfig, binaries);
+            //In the case of colorful images we use this line for training the Spatial Pooler
             //(Dictionary<string, int[]> sdrs2, var cortexLayer2) = SPTrain(htmConfig, binaries, colorThreshold );
 
             HelpersTemp helperFunc = new HelpersTemp();
@@ -71,9 +73,9 @@ namespace ConsoleApp
                                 string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                                 string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
                                 
-                                //for Output
+                                //for Listing the Output Correlation
                                 listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
-                                //for Input
+                                //for Listing the Input Correlation
                                 listInputCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(binaries[filePathList[i]].IndexWhere((el) => el == 1), binaries[filePathList2[j]].IndexWhere((el) => el == 1)));
                         }
                     }
@@ -84,10 +86,15 @@ namespace ConsoleApp
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
-            Console.WriteLine("INPUTCorrelation__Hexagonh1__Hexagonh2 : " + listInputCorrelation["Hexagonh1__Hexagonh2"]);
-            Console.WriteLine("InputCorrelation__Hexagonh1__TriangleT1 : " + listInputCorrelation["Hexagonh1__TriangleT1"]);
-            Console.WriteLine("OutputCorrelation__Hexagonh1__Hexagonh2 : " + listCorrelation["Hexagonh1__Hexagonh2"]);
-            Console.WriteLine("OutputCorrelation__Hexagonh1__TriangleT1 : " + listCorrelation["Hexagonh1__TriangleT1"]);
+
+            //for getting the Input Correlation results out, for exp. between Hexagonh1__Hexagonh2  
+            Console.WriteLine("INPUTCorrelation_between_____HexagonH1__HexagonH2 : " + listInputCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("InputCorrelation_between_____HexagonH1__TriangleT1 : " + listInputCorrelation["Hexagonh1__TriangleT1"]);
+
+            //for getting the Output Correlation results out, for exp. between Hexagonh1__Hexagonh2 
+            Console.WriteLine("OutputCorrelation_between_____HexagonH1__HexagonH2 : " + listCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("OutputCorrelation_between_____HexagonH1__TriangleT1 : " + listCorrelation["Hexagonh1__TriangleT1"]);
+            
             //Prediction Code
             // input image encoding
             int[] encodedInputImage = ReadImageData("C:/Users/Tarla/Desktop/Input/B.jpg", width,height);
@@ -186,6 +193,7 @@ namespace ConsoleApp
 
                     // Image binarization, inputVector means SDR
                     int[] inputVector = ReadImageData(filePath, height, width);
+                    //inputVector was a 1 Dimension array we need to convert it to a 2 Dimension array to see and analyze our SDR more clear 
                     string[] savedVector = ConvertToString(inputVector, height, width);
                     // Write binarized data to a file
                     var baseDir = Path.GetDirectoryName(filePath);
@@ -228,6 +236,7 @@ namespace ConsoleApp
                 InputImagePath = imagePath,
                 ImageHeight = height,
                 ImageWidth = width,
+                //for our dataset which are Black & Whites we do not use color Threshold
                 //BlueThreshold = 200,
                 //RedThreshold = 200,
                 //GreenThreshold = 200
