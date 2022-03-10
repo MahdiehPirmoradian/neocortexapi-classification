@@ -15,7 +15,7 @@
   "SynPermConnected": 0.1,
   "WrapAround": true,
   "GlobalInhibition": false,
-  "LocalAreaDensity": 0.1,
+  "LocalAreaDensity": 0.2,
   "SynPermTrimThreshold": 0.05,
   "SynPermMax": 1.0,
   "SynPermMin": 0.0,
