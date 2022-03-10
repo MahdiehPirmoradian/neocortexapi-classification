@@ -5,9 +5,10 @@ namespace AConfig
 {
     public class ArgsConfig
     {
-        private List<string> listInputWithValue = new() {"-cf","-if" };
+        private List<string> listInputWithValue = new() {"-cf","-if","tf" };
         public HtmConfig htmConfig;
         public string inputFolder;
+        //public string testFolder;
         public string configFile;
         public string saveFormat;
         public bool ifSaveResult;
