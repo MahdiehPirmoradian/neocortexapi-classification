@@ -8,16 +8,27 @@ using Daenet.ImageBinarizerLib.Entities;
 
 namespace ConsoleApp
 {
+    /// <summary>
+    /// Class Experiment contains the run() method
+    /// </summary>
     internal class Experiment
     {
         HtmConfig htmConfig;
         ArgsConfig expConfig;
+
+        /// <summary>
+        /// Setiing the initialized parameters of the HTM 
+        /// </summary>
         public Experiment( ArgsConfig config)
         {
             expConfig = config;
             htmConfig = config.htmConfig;
         }
 
+        /// <summary>
+        /// Method run() calls the Binarization method which is used as an Encoder for
+        /// turning Input Images into arrays of 0 & 1.
+        /// </summary>
         public void run()
         { 
             int height = htmConfig.InputDimensions[0];
@@ -87,10 +98,15 @@ namespace ConsoleApp
 
             var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
 
-            // Function that needs implementation
-            //string predictedLabel =  PredictLabel(sdrOfInputImage, sdrs);
 
-            //Console.WriteLine($"The image is predicted as {predictedLabel}");
+
+            // calling the prediction function and puting its output in "predictedLable" varriable
+            string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
+
+            //mentioning the category to which the input image has te mot smilarity
+            Console.WriteLine($"The image is predicted as {predictedLabel}");
+
+
             string PredictLabel(int[] sdrOfInputImage, Dictionary<string, int[]> sdrs)
             {
                 double x = 0;
@@ -127,7 +143,7 @@ namespace ConsoleApp
                         }
   
                     }
-                    //calculating the Average similarity of the Test_Image with the current category of Images
+                    //calculating the Average similarity of the Input_Tested_Image with the current each category of Trained_Images
                     z /= 4;
                     
                     if (z > d)
@@ -138,17 +154,12 @@ namespace ConsoleApp
                 }
 
 
-                
-                //mentioning the highest similarity of the input image with the iterated images
+                //printing the highest similarity of the Input_Tested_Image with the previous Trained_Images category
                 Console.WriteLine("\nSimilarity: " + d);
                 return category;
 
             }
 
-            // calling the prediction function and puting its output in "predictedLable" varriable
-            string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
-            //mentioning the category to which the input image has te mot smilarity
-            Console.WriteLine($"The image is predicted as {predictedLabel}");
         }
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
@@ -164,7 +175,7 @@ namespace ConsoleApp
                 {
                     inputsPath[folderName] = new List<string>();
                 }
-
+                //for getting the address(filePathList) of all the images inside of that specific folder(fullPath)
                 var filePathList = Directory.GetFiles(fullPath).Where(name => !name.EndsWith(".txt")).ToList();
 
 
@@ -228,7 +239,7 @@ namespace ConsoleApp
             var wd = doubleArray.GetLength(0);
             var intArray = new int[hg*wd];
 
-            //we convert this binary array into an integer array
+            //we convert this binary array into an array of integers
             //because we use Hierarchichal Temporal Memory which use SDR and they are always Integers
             for (int j = 0; j < hg; j++)
             {
@@ -296,7 +307,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 1000;
+            int maxSPLearningCycles = 1;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
@@ -306,7 +317,9 @@ namespace ConsoleApp
                 Console.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
 
                 int iteration = 0;
-                outputValues.Clear(); // Remove all elements in output SDR list
+
+                // Remove all elements in output SDR list
+                outputValues.Clear();
 
                 // This trains the layer on input pattern.
 
