@@ -81,8 +81,12 @@ namespace ConsoleApp
 
             // Prediction Code
             // input image encoding
-            int[] encodedInputImage = ReadImageData("C:/Users/omiid/Desktop/New folder/A.jpg", width,height);
-             var temp1 = cortexLayer.Compute(encodedInputImage, false);
+            //This Lines are for reading the TestFolder image which is saved By name B.jpg inside of TestFolder
+            string MyProjectDir = DirProject();
+            string TestFolder = MyProjectDir + "\\TestFolder\\B.jpg";
+
+            int[] encodedInputImage = ReadImageData(TestFolder, width, height);
+            var temp1 = cortexLayer.Compute(encodedInputImage, false);
 
             // This is a general way to get the SpatialPooler result from the layer.
             var activeColumns = cortexLayer.GetResult("sp") as int[];
@@ -107,7 +111,7 @@ namespace ConsoleApp
                     for (int j = 0; j < numberOfImages2; j++) // loop of each image in each category of inputs
                     {
                         if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
-                        string fileNameofFirstImage = Path.GetFileNameWithoutExtension("C:/Users/omiid/Desktop/New folder/A.jpg");
+                        string fileNameofFirstImage = Path.GetFileNameWithoutExtension(TestFolder);
                         string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                         string temp = $"{"entered image" + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
@@ -308,7 +312,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 400;
+            int maxSPLearningCycles = 1;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
@@ -342,6 +346,19 @@ namespace ConsoleApp
                     break;
             }
             return (outputValues,cortexLayer);
+        }
+        //This Line of code is used for returning the current path of the software which is used later for reading the Test Image
+        public string DirProject()
+        {
+            string DirDebug = System.IO.Directory.GetCurrentDirectory();
+            string DirProject = DirDebug;
+
+            for (int counter_slash = 0; counter_slash < 4; counter_slash++)
+            {
+                DirProject = DirProject.Substring(0, DirProject.LastIndexOf(@"\"));
+            }
+
+            return DirProject;
         }
     }
 }
