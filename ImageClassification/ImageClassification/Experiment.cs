@@ -94,7 +94,7 @@ namespace ConsoleApp
             {
                 int num = 0;
                 double x = 0;
-                double y = 0;
+                
                 string category = "";
                 int[] Hexagon = new int[4]; ;
                 int[] Triangle = new int[4];
