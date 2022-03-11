@@ -73,7 +73,7 @@ namespace ConsoleApp
                                 string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                                 string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
                                 
-                                //for Listing the Output Correlation
+                                //for Listing the Correlation of Output SDRs
                                 listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
                                 //for Listing the Input Correlation
                                 listInputCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(binaries[filePathList[i]].IndexWhere((el) => el == 1), binaries[filePathList2[j]].IndexWhere((el) => el == 1)));
@@ -94,10 +94,12 @@ namespace ConsoleApp
             //for getting the Output Correlation results out, for exp. between Hexagonh1__Hexagonh2 
             Console.WriteLine("OutputCorrelation_between_____HexagonH1__HexagonH2 : " + listCorrelation["Hexagonh1__Hexagonh2"]);
             Console.WriteLine("OutputCorrelation_between_____HexagonH1__TriangleT1 : " + listCorrelation["Hexagonh1__TriangleT1"]);
-            
-            //Prediction Code
-            // input image encoding
-            int[] encodedInputImage = ReadImageData("C:/Users/Tarla/Desktop/Input/B.jpg", width,height);
+
+            //This Lines are for reading the TestFolder image which is saved By name B.jpg inside of TestFolder
+            string MyProjectDir = DirProject();
+            string TestFolder = MyProjectDir + "\\TestFolder\\B.jpg";
+
+            int[] encodedInputImage = ReadImageData(TestFolder, width,height);
             var temp1 = cortexLayer.Compute(encodedInputImage, false);
 
             // This is a general way to get the SpatialPooler result from the layer.
@@ -131,7 +133,7 @@ namespace ConsoleApp
                     for (int j = 0; j < numberOfImages2; j++) // loop of each image in each category of inputs
                     {
                         if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
-                        string fileNameofFirstImage = Path.GetFileNameWithoutExtension("C:/Users/Tarla/Desktop/Input/B.jpg");
+                        string fileNameofFirstImage = Path.GetFileNameWithoutExtension(TestFolder);
                         string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                         string temp = $"{"entered image" + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
@@ -199,7 +201,7 @@ namespace ConsoleApp
                     var baseDir = Path.GetDirectoryName(filePath);
                     var fileNameWithoutExt = Path.GetFileNameWithoutExtension(filePath);
                     var ext = "txt";
-
+                    //Creating the text File
                     var fullFileName = $"{fileNameWithoutExt}.{ext}";
                     binaries.Add(filePath, inputVector);
                     System.IO.File.WriteAllLines(Path.Combine(baseDir, fullFileName), savedVector);
@@ -316,7 +318,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 1000;
+            int maxSPLearningCycles = 2;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
@@ -353,5 +355,20 @@ namespace ConsoleApp
             }
             return (outputValues,cortexLayer);
         }
+
+        //This Line of code is used for returning the current path of the software which is used later for reading the Test Image
+        public string DirProject()
+        {
+            string DirDebug = System.IO.Directory.GetCurrentDirectory();
+            string DirProject = DirDebug;
+
+            for (int counter_slash = 0; counter_slash < 4; counter_slash++)
+            {
+                DirProject = DirProject.Substring(0, DirProject.LastIndexOf(@"\"));
+            }
+
+            return DirProject;
+        }
+        
     }
 }
