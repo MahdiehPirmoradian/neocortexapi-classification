@@ -93,7 +93,7 @@ namespace ConsoleApp
 
             var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
 
-
+            
              string PredictLabel(int[] sdrOfInputImage, Dictionary<string, int[]> sdrs)
             {
                 int num = 0;
