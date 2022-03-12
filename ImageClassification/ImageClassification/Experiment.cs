@@ -12,7 +12,7 @@ namespace ConsoleApp
     {
         HtmConfig htmConfig;
         ArgsConfig expConfig;
-        public Experiment( ArgsConfig config)
+        public Experiment(ArgsConfig config)
         {
             expConfig = config;
             htmConfig = config.htmConfig;
@@ -93,22 +93,31 @@ namespace ConsoleApp
 
             var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
 
-            
-             string PredictLabel(int[] sdrOfInputImage, Dictionary<string, int[]> sdrs)
+            /// <summary>
+            /// the prediction Code
+            /// </summary>
+            /// <param name="sdrOfInputImage"> sdr of the input image which should be compared to the trained ones</param>
+            /// <param name="sdrs"> dictionary of the sdrs of all images whith which we trained the system</param>
+            /// <returns>the category to which the most similarity of input image is recognized</returns>
+            string PredictLabel(int[] sdrOfInputImage, Dictionary<string, int[]> sdrs)
             {
                 int num = 0;
-                double x = 0;
-                
+                // currentComparedSimilarity is gonna be used as  holder of the current compared similarity
+                double currentComparedSimilarity = 0;
+
                 string category = "";
                 int[] Hexagon = new int[4]; ;
                 int[] Triangle = new int[4];
                 int[] StraightCross = new int[4];
+                
+                //looping each folder in our inputFolder, where the training images are placed
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
-                { // loop of each folder in input folder
+                { 
                     var classLabel2 = secondEntry.Key;
                     var filePathList2 = secondEntry.Value;
                     var numberOfImages2 = filePathList2.Count;
-                    for (int j = 0; j < numberOfImages2; j++) // loop of each image in each category of inputs
+                    for (int j = 0; j < numberOfImages2; j++) 
+                        // loop of each image in each category of inputs
                     {
                         if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
                         string fileNameofFirstImage = Path.GetFileNameWithoutExtension(TestFolder);
@@ -116,13 +125,16 @@ namespace ConsoleApp
                         string temp = $"{"entered image" + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
 
 
-                        //calculating the similarity of tu current itterated image with the input image
-                        x = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
+                        //calculating the similarity of the current itterated image with the input image
+                        currentComparedSimilarity = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
 
-                        //creating arrays to store similarity values, to be able to pick the highest for each category in the end
-                        num = Convert.ToInt32(x);
+                        // converting value of currentComparedSimilarity (double) to int
+                        num = Convert.ToInt32(currentComparedSimilarity);
+
+                        //getting the category of currently compared image(among the trained images)
                         category = secondEntry.Key;
 
+                        // adding each similarity to its own category, and creating a list of similarities to input image, for each category
                         if (category == "Hexagon")
                         {
                             Hexagon[j] = num;
@@ -133,21 +145,10 @@ namespace ConsoleApp
                         }
                         else { StraightCross[j] = num; }
 
-
-
-                        ////if the similarity of input image with the rightnow-itterated image is more than the similarity of the input image and last itterated image
-                        //if (x > y)
-                        //{
-                        //    y = x;
-                        //    category = secondEntry.Key;
-
-                        //}
-
-
                     }
                 }
-                //mentioning the highest similarity of the input image with the iterated images
-                
+                //mentioning the highest similarity of the input image with the iterated trained images
+
                 Console.WriteLine("list of similarities to Hexagon category:");
                 Hexagon.ToList().ForEach(Console.WriteLine);
                 Console.WriteLine("MaxSimilarity to Hexagon = " + Hexagon.Max());
@@ -160,6 +161,9 @@ namespace ConsoleApp
                 return category;
 
             }
+
+
+
 
             // calling the prediction function and puting its output in "predictedLable" varriable
             string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
@@ -212,7 +216,7 @@ namespace ConsoleApp
             {
                 for (int i = 0; i < width; i++)
                 {
-                    vs[i] += inputVector[j * width + i].ToString()+',';
+                    vs[i] += inputVector[j * width + i].ToString() + ',';
                 }
             }
             return vs;
@@ -242,17 +246,17 @@ namespace ConsoleApp
             var doubleArray = bizer.GetArrayBinary();
             var hg = doubleArray.GetLength(1);
             var wd = doubleArray.GetLength(0);
-            var intArray = new int[hg*wd];
+            var intArray = new int[hg * wd];
 
             //we convert this binary array into an integer array
             //because we use Hierarchichal Temporal Memory which use SDR and they are always Integers
             for (int j = 0; j < hg; j++)
             {
-                for (int i = 0;i< wd;i++)
+                for (int i = 0; i < wd; i++)
                 {
-                    intArray[j*wd+i] = (int)doubleArray[i,j,0];
+                    intArray[j * wd + i] = (int)doubleArray[i, j, 0];
                 }
-            } 
+            }
             return intArray;
         }
         /// <summary> Modified by Long Nguyen
@@ -260,7 +264,7 @@ namespace ConsoleApp
         /// </summary>
         /// <param name="cfg"></param> Spatial Pooler configuration by HtmConfig style
         /// <param name="inputValues"></param> Binary input vector (pattern) list
-        private static (Dictionary<string, int[]>,CortexLayer<object, object> cortexLayer) SPTrain(HtmConfig cfg, Dictionary<string, int[]> inputValues)
+        private static (Dictionary<string, int[]>, CortexLayer<object, object> cortexLayer) SPTrain(HtmConfig cfg, Dictionary<string, int[]> inputValues)
         {
             // Creates the htm memory.
             var mem = new Connections(cfg);
@@ -312,7 +316,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 400;
+            int maxSPLearningCycles = 1;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
@@ -345,7 +349,7 @@ namespace ConsoleApp
                 if (isInStableState)
                     break;
             }
-            return (outputValues,cortexLayer);
+            return (outputValues, cortexLayer);
         }
         //This Line of code is used for returning the current path of the software which is used later for reading the Test Image
         public string DirProject()
@@ -361,4 +365,5 @@ namespace ConsoleApp
             return DirProject;
         }
     }
+    
 }
