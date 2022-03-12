@@ -13,8 +13,8 @@ namespace ConsoleApp
     /// </summary>
     internal class Experiment
     {
-        HtmConfig htmConfig;
-        ArgsConfig expConfig;
+        readonly HtmConfig htmConfig;
+        readonly ArgsConfig expConfig;
 
         /// <summary>
         /// Setiing the initialized parameters of the HTM 
@@ -60,7 +60,7 @@ namespace ConsoleApp
 
                 for (int i = 0; i < numberOfImages; i++) // loop of the images inside the folder
                 {
-                    if (!sdrs.TryGetValue(filePathList[i], out int[] sdr1)) continue;
+                    if (!sdrs.TryGetValue(filePathList[i], out var sdr1)) continue;
                     
                     foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { // loop of the folder (again)
                         var classLabel2 = secondEntry.Key;
@@ -68,7 +68,7 @@ namespace ConsoleApp
                         var numberOfImages2 = filePathList2.Count;
                         for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
                             {
-                                if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
+                                if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
                                 string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
                                 string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                                 string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
@@ -118,7 +118,8 @@ namespace ConsoleApp
 
 
             /// <summary>
-            /// Prediction Code for comparing the Test Image average Similarity to each category of Previous Trained Images
+            /// Prediction Code Created By Group Metaverse - Mahdieh Pirmoradian
+            /// for comparing the Test Image average Similarity to each category of Previous Trained Images
             /// </summary>
             /// <param name="sdrOfInputImage">SDR of the Input Test image that needs to be compared with previous trained set</param>
             /// <param name="sdrs">dictionary of SDRs of trained Input images<</param>
@@ -142,7 +143,7 @@ namespace ConsoleApp
                     var numberOfImages2 = filePathList2.Count;
                     for (int j = 0; j < numberOfImages2; j++) // loop of each image in each category of inputs
                     {
-                        if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
+                        if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
                         string fileNameofTestImage = Path.GetFileNameWithoutExtension(TestFolder);
                         string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                         string temp = $"{"entered image" + fileNameofTestImage}__{classLabel2 + fileNameOfSecondImage}";
@@ -367,14 +368,14 @@ namespace ConsoleApp
         }
 
         //This Line of code is used for returning the current path of the software which is used later for reading the Test Image
-        public string DirProject()
+        public static string DirProject()
         {
             string DirDebug = System.IO.Directory.GetCurrentDirectory();
             string DirProject = DirDebug;
 
             for (int counter_slash = 0; counter_slash < 4; counter_slash++)
             {
-                DirProject = DirProject.Substring(0, DirProject.LastIndexOf(@"\"));
+                DirProject = DirProject[..DirProject.LastIndexOf(@"\")];
             }
 
             return DirProject;
