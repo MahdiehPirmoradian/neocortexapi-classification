@@ -98,7 +98,8 @@ namespace ConsoleApp
             //This Lines are for reading the TestFolder image which is saved By name B.jpg inside of TestFolder
             string MyProjectDir = DirProject();
             string TestFolder = MyProjectDir + "\\TestFolder\\B.jpg";
-
+            //prediction code
+            //Input Image encoding
             int[] encodedInputImage = ReadImageData(TestFolder, width,height);
             var temp1 = cortexLayer.Compute(encodedInputImage, false);
 
@@ -116,16 +117,25 @@ namespace ConsoleApp
             Console.WriteLine($"The image is predicted as {predictedLabel}");
 
 
+            /// <summary>
+            /// Prediction Code for comparing the Test Image average Similarity to each category of Previous Trained Images
+            /// </summary>
+            /// <param name="sdrOfInputImage">SDR of the Input Test image that needs to be compared with previous trained set</param>
+            /// <param name="sdrs">dictionary of SDRs of trained Input images<</param>
+            /// <returns> predictedLableCat which is the name of Predicted_Lable_Category; </returns>
             string PredictLabel(int[] sdrOfInputImage, Dictionary<string, int[]> sdrs)
             {
-                double x = 0;
-                double y = 0;
-                double d = 0;
-                string category = "";
+                //This variable is used for comparing the similarity of Input Test Image with each trained input SDR
+                double comparedSimilarity = 0;
+                //Temporal Holder of the last highest similar SDR
+                double tempralHolder = 0;
+                //This variable is used for keeping the maximum predicted similarity percentage
+                double maxPredictedLable = 0;
+                string predictedLableCat = "";
 
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
                 {
-                    double z = 0;
+                    double avgSimilarity = 0;
                     // loop of each folder in input folder
                     var classLabel2 = secondEntry.Key;
                     var filePathList2 = secondEntry.Value;
@@ -133,39 +143,39 @@ namespace ConsoleApp
                     for (int j = 0; j < numberOfImages2; j++) // loop of each image in each category of inputs
                     {
                         if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
-                        string fileNameofFirstImage = Path.GetFileNameWithoutExtension(TestFolder);
+                        string fileNameofTestImage = Path.GetFileNameWithoutExtension(TestFolder);
                         string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
-                        string temp = $"{"entered image" + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
+                        string temp = $"{"entered image" + fileNameofTestImage}__{classLabel2 + fileNameOfSecondImage}";
 
 
-                        //calculating the similarity of the current itterated image with the input image
-                        x = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
-                        z += x;
+                        //calculating the similarity of the current itterated image with the input Test image
+                        comparedSimilarity = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
+                        avgSimilarity += comparedSimilarity;
 
                         //if the similarity of input image with the right now-itterated image is more than
-                        //the similarity of the input image and last itterated image
-                        if (x > y)
+                        //the similarity of the input Test image and last itterated image
+                        if (comparedSimilarity > tempralHolder)
                         {
-                            y = x;
-                            category = secondEntry.Key;
-                            
+                            tempralHolder = comparedSimilarity;
+                            predictedLableCat = secondEntry.Key;
+
                         }
-  
+
                     }
                     //calculating the Average similarity of the Input_Tested_Image with the current each category of Trained_Images
-                    z /= 4;
-                    
-                    if (z > d)
+                    avgSimilarity /= 4;
+
+                    if (avgSimilarity > maxPredictedLable)
                     {
-                        d = z;
+                        maxPredictedLable = avgSimilarity;
                     }
-                    Console.WriteLine("\nSimilarity: To Category  " + secondEntry.Key + "  " +z);
+                    Console.WriteLine("\nSimilarity: To Category  " + secondEntry.Key + "  " + avgSimilarity);
                 }
 
 
                 //printing the highest similarity of the Input_Tested_Image with the previous Trained_Images category
-                Console.WriteLine("\nSimilarity: " + d);
-                return category;
+                Console.WriteLine("\nSimilarity: " + maxPredictedLable);
+                return predictedLableCat;
 
             }
 
@@ -370,5 +380,6 @@ namespace ConsoleApp
             return DirProject;
         }
         
+
     }
 }
