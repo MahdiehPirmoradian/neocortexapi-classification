@@ -5,7 +5,7 @@ namespace AConfig
 {
     public class ArgsConfig
     {
-        private List<string> listInputWithValue = new() {"-cf","-if"};
+        private readonly List<string> listInputWithValue = new() {"-cf","-if"};
         public HtmConfig htmConfig;
         public string inputFolder;
         //public string testFolder;
