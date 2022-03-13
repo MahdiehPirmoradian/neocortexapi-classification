@@ -1,0 +1,18 @@
+This work is a new approach to image classification based on HTM algorithm.
+
+
+In the previous work at the university an Image Classification solution has been implemented. 
+Your task is to implement a program that uses the existing solution (add reference to it) as a library and start a training of learning images. 
+You are free to design or find the experiment image data to be used in the experiment. This can be plants, animals or whatever.
+Your task is to change various learning parameters and to find the best fit that shows image classification. Most important learning parameters are:
+
+Global/Local Inhibition, 
+Potential Radius, 
+Local Area Density and 
+NumofActiveColumnsPerInArea. 
+
+Demonstrate how these parameters influence the learning. 
+Your code must provide the learning code and prediction code. After learning user should use your code and test the quality of learning. 
+For example, the user after learning enter the image “table”. The prediction code provide a set of predicting results like: “Table – 87%, chair 7%, light - 3%”.
+… 
+Our code must provide Learning and Prediction code
