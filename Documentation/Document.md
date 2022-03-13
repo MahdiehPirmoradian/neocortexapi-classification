@@ -56,7 +56,7 @@ for entering the test-image create a folder named "TestFolder" in the shown path
 
  
 
- Sample input folder of the project can be found [here](ImageClassification/ImageClassification/InputFolder)  
+ Sample input folder of the project can be found [here](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/main/ImageClassification/ImageClassification/InputFolder)  
   
  
  **HTM Configuration**  
