@@ -1,5 +1,24 @@
 # NeocortexApi-Project **Image Classification**
 
+Group Name = Metaverse
+Team Members = [Mahdieh Pirmoradian](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Mahdieh) , [Omid Nikbakht](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid)
+
+
+We looked over 70 diverse HTM network setups in total.
+
+
+## Progress of the project
+1) Prediction Code is created.
+2) Diagrams for comparison with different Htm Configs was created.
+3) one [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Mahdieh) had Experiments for variable Potential Radiuos while changing the Local Area Density. and another [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid) NumActiveColumnsPerInhArea and Local and Global Inhibition.
+
+
+## In-Progress
+1) working on docx, pdf, pptx and mp4.
+
+
+
+
 This project is the implementaiton of the command line interfaca for the image classification based on the Hierarchical Temporal Memory (HTM) implemented in the [necortexapi](https://github.com/ddobric/neocortexapi) repository.
 
 This project is a collected work of thesis [**htm imgclassification**](https://github.com/UniversityOfAppliedSciencesFrankfurt/thesis-htm-imgclassification-dasu) by Dasu Sai Durga Sundari and SoftwareEngineering(SE) project of the same name by Long Nguyen at the Frankfurt University of Applied Sciences.  
