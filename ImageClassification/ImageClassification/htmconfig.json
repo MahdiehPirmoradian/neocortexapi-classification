@@ -1,12 +1,17 @@
 {
+  //"TemporalMemory" is a memory for remembering the last status of learning process
   "TemporalMemory": {},
   "SpatialPooler": {},
+  //"InhibitionRadius" deviding the whole spatial surface, to smaller areas and assigning potencialRadius and 
+  //localAreadensity-or-NumActiveCoulumnsPerInhArea, when the globalInhibition is false. is calculated internaly, so we comment it out
   //"InhibitionRadius": 1,
   "InputTopology": null,
   "ColumnTopology": null,
   "NumInputs": 1,
   "NumColumns": 0,
+  //"PotentialRadius" is a radius of sdr surface which can (has the possibility) to be connected to each coloumn of SpaialPooler
   "PotentialRadius": 30,
+  //"PotentialPct" is The percentage of inputs that a column can be connected to within its potential radius
   "PotentialPct": 0.5,
   "StimulusThreshold": 0.0,
   "SynPermBelowStimulusInc": 0.01,

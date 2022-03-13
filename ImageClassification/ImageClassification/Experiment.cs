@@ -48,7 +48,8 @@ namespace ConsoleApp
 
                 for (int i = 0; i < numberOfImages; i++) // loop of the images inside the folder
                 {
-                    if (!sdrs.TryGetValue(filePathList[i], out int[] sdr1)) continue;
+
+                    if (!sdrs.TryGetValue(filePathList[i], out var sdr1)) continue;
 
                     foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
                     { // loop of the folder (again)
@@ -57,7 +58,7 @@ namespace ConsoleApp
                         var numberOfImages2 = filePathList2.Count;
                         for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
                         {
-                            if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
+                            if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
                             string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
                             string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                             string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
@@ -94,7 +95,7 @@ namespace ConsoleApp
             var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
 
             /// <summary>
-            /// the prediction Code
+            /// the prediction Code created by group Metaverse - Omid Nikbakht
             /// </summary>
             /// <param name="sdrOfInputImage"> sdr of the input image which should be compared to the trained ones</param>
             /// <param name="sdrs"> dictionary of the sdrs of all images whith which we trained the system</param>
@@ -119,7 +120,7 @@ namespace ConsoleApp
                     for (int j = 0; j < numberOfImages2; j++) 
                         // loop of each image in each category of inputs
                     {
-                        if (!sdrs.TryGetValue(filePathList2[j], out int[] sdr2)) continue;
+                        if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
                         string fileNameofFirstImage = Path.GetFileNameWithoutExtension(TestFolder);
                         string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                         string temp = $"{"entered image" + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
@@ -316,7 +317,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 1;
+            int maxSPLearningCycles = 300;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
