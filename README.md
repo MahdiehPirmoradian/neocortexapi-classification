@@ -1,8 +1,36 @@
+
 # NeocortexApi-Project **Image Classification**
+
+Group Name = Metaverse
+Team Members = [Mahdieh Pirmoradian](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Mahdieh) , [Omid Nikbakht](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid)
+
+The images DataSet for training process are chosen from the following link: [DataSetImages](https://www.kaggle.com/abdurrahumaannazeer/handdrawnshapes)
+
+
+They are 60x60 pixles images Hand Drawn Shapes. 
+
+![image](https://user-images.githubusercontent.com/77645707/158065860-4f6ad693-8138-4a44-ac90-e8d2f2d7b42c.png)
+
+We looked over 70 diverse HTM network setups in total. the Goal was to get the best results of learning and prediction, while variying parameters of htmConfig file in a specific range. after implementaion of these enhancements, the HTM system should be able to learn the specifications of images per each category, so that when we enter an image as a test-image, the system is able to tell us how high is the possibility of belonging the test-image to each of the learned categories.
+
+
+## Progress of the project
+1) Two different types of Prediction Code is created and are working accurately. one is comparing the similarity of the input test-image to average similarity of the images of each category, while another one compares the input test-image to all images and choose the image with most similarity and returns its category as the predicted category.  
+2) An excel database of output information of the system is created and diagrams for comparison with different Htm Configs was created.
+3) One [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Mahdieh) has done Experiments for variable Potential Radiuos while changing the Local Area Density. and another [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid) has investigate the NumActiveColumnsPerInhArea and Local and Global Inhibition parameters.
+4) We also added some comments to make the code more readable and easier to understand.
+5) We also worked on some warnings of the Ecperiment class and solved them.
+6) the input test-image path doesnt need to be written completely, but its adressed based on the folder in which the program is running.
+
+
+## In-Progress
+1) Working on docx, pdf, pptx and mp4.
+2) Planing more experiments to discover the behavior of system, while changing the above mentioned htmConfig parameters in even wider ranges.
+
+
 
 This project is the implementaiton of the command line interfaca for the image classification based on the Hierarchical Temporal Memory (HTM) implemented in the [necortexapi](https://github.com/ddobric/neocortexapi) repository.
 
-This project is a collected work of thesis [**htm imgclassification**](https://github.com/UniversityOfAppliedSciencesFrankfurt/thesis-htm-imgclassification-dasu) by Dasu Sai Durga Sundari and SoftwareEngineering(SE) project of the same name by Long Nguyen at the Frankfurt University of Applied Sciences.  
 
 ## How to use the classifier?
 
@@ -13,60 +41,26 @@ This project is a collected work of thesis [**htm imgclassification**](https://g
  ![](Images/WorkingDirectory.png)
  
 The imagesets are stored inside "InputFolder/".  
+![inputFolder image](https://user-images.githubusercontent.com/77645707/158067271-92a222f7-2513-47a7-960c-600174059ddf.jpg)
 
-![](Images/InputFolder.png)  
 
 Each Imageset is stored inside a folder whose name is the set's label.  
+![inputfolder sample with images](https://user-images.githubusercontent.com/77645707/158067340-11486572-420c-47bf-b1cb-3e09cd3eefa0.jpg)
 
-![](Images/SampleData.png)  
+for entering the test-image create a folder named "TestFolder" in the shown path, and put the test-image in it  : 
+![testimage input folder](https://user-images.githubusercontent.com/77645707/158067461-8fb78505-0879-45af-9be0-98740ef1e84b.jpg)
+*** name the test-image "B.jpg" please
+![test image place](https://user-images.githubusercontent.com/77645707/158067596-e8af236a-d481-402d-bdeb-cb17cb23419e.jpg)
 
- Sample input folder of the project can be found [here](ImageClassification/ImageClassification/InputFolder)  
- ### 2 Start the application by passing required command line arguments
- ~~~
- ImageClassification -if "InputFolder" -cf htmconfig.json
- ~~~
- -if   "Input Images folder path"  
- -cf   "json htm config file path"  
+
+
+ 
+
+ Sample input folder of the project can be found [here](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/main/ImageClassification/ImageClassification/InputFolder)  
+  
  
  **HTM Configuration**  
- HTM setting of the project can be inputted to the program by means of a .json file [htmconfig.json](ImageClassification/ImageClassification/htmconfig.json).  
+ HTM setting of the project can be inputted to the program by means of a .json file [htmconfig.json](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/main/ImageClassification/ImageClassification/htmconfig.json).  
  Multiple experiments can therefore be conducted via changes of parameters in the json file. 
  For a reference on what each parameter does, please refer to []() on [neocortexapi](https://github.com/ddobric/neocortexapi) 
  
-### 3 How it works
-
-When started the application will load images and start the training process. The training process runs in following steps.
-
-#### (1) Convert The Images to binary array via binarization**  
-[The Binarization Library](https://github.com/daenetCorporation/imagebinarizer) was developed as an open source project at [Daenet](https://daenet.de/de/).  
-the current implementation uses a color threshold of 200 for every color in a 8bit-RGB scale.  
-The images with the same label must be stored in folder. The folder name is the images' label.   
-
-#### (2) Learn spatial patterns stored in images with the Spatial Pooler(SP)
-SP first iterates through all images until the stable state is entered.
-SP iterate through all the images as it learns.
-
-#### (3) Validation of SP Learning for different set of images
-The last set of Sparse Density Representations (SDRs), the output of Spatial Pooler(SP) for each binarized image were saved for correlation validation.  
-There are 2 types of correlation which are defined as follow:
-1. *Micro Correlation*: Maximum/Average/Minimum correlation in similar bit percent of all images' SDRs which respect to each another in the same label.  
-2. *Macro Correlation*: Maximum/Average/Minimum correlation in similar bit percent of all images' SDRs with images from 2 different labels.   
-The results of the two correlation are printed in the command prompt when executing the code  
-
-The algorithm for calculating correlation can be found [here](https://github.com/ddobric/neocortexapi/blob/7d05b61b919a82fd7f8028c63970dfbc7d78dd50/source/NeoCortexApi/Utility/MathHelpers.cs#L93)  
-Result example:
-
-![Sample output of the experiment after learning](Images/OutputExample.png)  
-The Images used was collected from [Fruit 360](https://github.com/Horea94/Fruit-Images-Dataset).  
-## How to run the application in Visual Studio
-Visual Studio can add arguments (args) parameter to run your code.  
-![](Images/LaunchProfile.png)
-This is done by changing the arguments command line arguments in Debug Properties Launch Profiles to 
-~~~
--cf htmconfig1.json -if "InputFolder"
-~~~
--cf add the option of the configuration file "htmconfig1.json"  
--if add the option of the training Input Folder "InputFolder/".  
-This folder contains folders of images, where the folder names also act as the label for the images inside it.  
-
-
