@@ -1,20 +1,12 @@
 {
-  //TemporalMemory is used for remembering the last status of learning process
   "TemporalMemory": {},
   "SpatialPooler": {},
-  //InhibitionRadius deviding the whole special surfaces to smaller areas and 
-  //assigning potential radious and Local area density or Number of Active Columns Per Inhibition Area when the Global
-  //Inhibition is false
-  //is calculated internally in the encoder code that is why we commented it out here.
   //"InhibitionRadius": 1,
   "InputTopology": null,
   "ColumnTopology": null,
   "NumInputs": 1,
   "NumColumns": 0,
-  //This parameter specifies the maximum amount of input to which each column can be connected.
   "PotentialRadius": 30,
-  //The percentage of inputs that a column can be connected to within its potential radius. If set to 1, every input within the column’s
-  //potential radius will be connected to it.
   "PotentialPct": 0.5,
   "StimulusThreshold": 0.0,
   "SynPermBelowStimulusInc": 0.01,
@@ -23,7 +15,7 @@
   "SynPermConnected": 0.1,
   "WrapAround": true,
   "GlobalInhibition": false,
-  "LocalAreaDensity": 0.9,
+  "LocalAreaDensity": 1,
   "SynPermTrimThreshold": 0.05,
   "SynPermMax": 1.0,
   "SynPermMin": 0.0,
