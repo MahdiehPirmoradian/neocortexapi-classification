@@ -60,7 +60,7 @@ for entering the test-image create a folder named "TestFolder" in the shown path
   
  
  **HTM Configuration**  
- HTM setting of the project can be inputted to the program by means of a .json file [htmconfig.json](ImageClassification/ImageClassification/htmconfig.json).  
+ HTM setting of the project can be inputted to the program by means of a .json file [htmconfig.json](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/main/ImageClassification/ImageClassification/htmconfig.json).  
  Multiple experiments can therefore be conducted via changes of parameters in the json file. 
  For a reference on what each parameter does, please refer to []() on [neocortexapi](https://github.com/ddobric/neocortexapi) 
  
