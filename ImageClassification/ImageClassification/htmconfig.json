@@ -6,7 +6,7 @@
   "ColumnTopology": null,
   "NumInputs": 1,
   "NumColumns": 0,
-  "PotentialRadius": 20,
+  "PotentialRadius": 30,
   "PotentialPct": 0.5,
   "StimulusThreshold": 0.0,
   "SynPermBelowStimulusInc": 0.01,
