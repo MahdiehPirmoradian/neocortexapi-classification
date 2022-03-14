@@ -1,8 +1,6 @@
 
 # NeocortexApi-Project **Image Classification**
 
-Group Name = Metaverse
-Team Members = [Mahdieh Pirmoradian](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Mahdieh) , [Omid Nikbakht](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid)
 
 The images DataSet for training process are chosen from the following link: [DataSetImages](https://www.kaggle.com/abdurrahumaannazeer/handdrawnshapes)
 
