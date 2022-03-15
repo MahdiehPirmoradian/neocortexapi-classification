@@ -1,8 +1,6 @@
 
 # NeocortexApi-Project **Image Classification**
 
-Group Name = Metaverse
-Team Members = [Mahdieh Pirmoradian](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Mahdieh) , [Omid Nikbakht](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid)
 
 The images DataSet for training process are chosen from the following link: [DataSetImages](https://www.kaggle.com/abdurrahumaannazeer/handdrawnshapes)
 
@@ -54,4 +52,13 @@ for entering the test-image create a folder named "TestFolder" in the shown path
 
 
 
+ 
+
+ Sample input folder of the project can be found [here](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/main/ImageClassification/ImageClassification/InputFolder)  
+  
+ 
+ **HTM Configuration**  
+ HTM setting of the project can be inputted to the program by means of a .json file [htmconfig.json](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/main/ImageClassification/ImageClassification/htmconfig.json).  
+ Multiple experiments can therefore be conducted via changes of parameters in the json file. 
+ For a reference on what each parameter does, please refer to []() on [neocortexapi](https://github.com/ddobric/neocortexapi) 
  
