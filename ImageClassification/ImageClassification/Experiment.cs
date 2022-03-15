@@ -110,15 +110,15 @@ namespace ConsoleApp
                 int[] Hexagon = new int[4]; ;
                 int[] Triangle = new int[4];
                 int[] StraightCross = new int[4];
-                
+
                 //looping each folder in our inputFolder, where the training images are placed
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
-                { 
+                {
                     var classLabel2 = secondEntry.Key;
                     var filePathList2 = secondEntry.Value;
                     var numberOfImages2 = filePathList2.Count;
-                    for (int j = 0; j < numberOfImages2; j++) 
-                        // loop of each image in each category of inputs
+                    for (int j = 0; j < numberOfImages2; j++)
+                    // loop of each image in each category of inputs
                     {
                         if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
                         string fileNameofFirstImage = Path.GetFileNameWithoutExtension(TestFolder);
@@ -148,17 +148,37 @@ namespace ConsoleApp
 
                     }
                 }
-                //mentioning the highest similarity of the input image with the iterated trained images
 
-                Console.WriteLine("list of similarities to Hexagon category:");
-                Hexagon.ToList().ForEach(Console.WriteLine);
+                //averageCalculation
+                int HexagonAvg = (Hexagon.Sum()) / (Hexagon.Length);
+                int TriangleAvg = (Triangle.Sum()) / (Triangle.Length);
+                int StraightCrossAvg = (StraightCross.Sum()) / (StraightCross.Length);
+                Console.WriteLine("---------------");
+                Console.WriteLine("Average similarity to Hexagon: "+HexagonAvg+"%");
+                Console.WriteLine("Average similarity to Triangle: " + TriangleAvg + "%");
+                Console.WriteLine("Average similarity to StraightCross: " + StraightCrossAvg + "%");
+                Console.WriteLine("---------------") ;
+
+
+
+
+
+                //mentioning the highest and lowest similarity of the input image with the iterated trained images
+
+
                 Console.WriteLine("MaxSimilarity to Hexagon = " + Hexagon.Max());
-                Console.WriteLine("list of similarities to Triangle Category:");
-                Triangle.ToList().ForEach(Console.WriteLine);
+                
                 Console.WriteLine("MaxSimilarity to Triangle = " + Triangle.Max());
-                Console.WriteLine("list of similarities to StraightCross Category:");
-                StraightCross.ToList().ForEach(Console.WriteLine);
+
                 Console.WriteLine("MaxSimilarity to StraightCross = " + StraightCross.Max());
+                Console.WriteLine("---------------") ;
+
+                Console.WriteLine("MinSimilarity to Hexagon = " + Hexagon.Min());
+
+                Console.WriteLine("MinSimilarity to Triangle = " + Triangle.Min());
+
+                Console.WriteLine("MinSimilarity to StraightCross = " + StraightCross.Min());
+
                 return category;
 
             }
@@ -317,7 +337,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 300;
+            int maxSPLearningCycles = 1;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
