@@ -83,17 +83,23 @@ namespace ConsoleApp
             }
 
             var classes = inputsPath.Keys.ToList();
+
+
+
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
+            
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
 
+
+
             //for getting the Input Correlation results out, for exp. between Hexagonh1__Hexagonh2  
-            Console.WriteLine("INPUTCorrelation_between_____HexagonH1__HexagonH2 : " + listInputCorrelation["Hexagonh1__Hexagonh2"]);
-            Console.WriteLine("InputCorrelation_between_____HexagonH1__TriangleT1 : " + listInputCorrelation["Hexagonh1__TriangleT1"]);
+            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__HexagonH2 : " + listInputCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__TriangleT1 : " + listInputCorrelation["Hexagonh1__TriangleT1"]);
 
             //for getting the Output Correlation results out, for exp. between Hexagonh1__Hexagonh2 
-            Console.WriteLine("OutputCorrelation_between_____HexagonH1__HexagonH2 : " + listCorrelation["Hexagonh1__Hexagonh2"]);
-            Console.WriteLine("OutputCorrelation_between_____HexagonH1__TriangleT1 : " + listCorrelation["Hexagonh1__TriangleT1"]);
+            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__HexagonH2 : " + listCorrelation["Hexagonh1__Hexagonh2"]);
+            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__TriangleT1 : " + listCorrelation["Hexagonh1__TriangleT1"]);
 
             //This Lines are for reading the TestFolder image which is saved By name B.jpg inside of TestFolder
             string MyProjectDir = DirProject();
@@ -110,38 +116,48 @@ namespace ConsoleApp
 
 
 
-            // calling the prediction function and puting its output in "predictedLable" varriable
+            Console.WriteLine("\n\nNow for the Test Image.......................");
+            // calling the prediction function for Printing out Name of the category to which the
+            // input Test Image has te mot smilarity
             string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
-
-            //mentioning the category to which the input image has te mot smilarity
             Console.WriteLine($"The image is predicted as {predictedLabel}");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
 
-
+            #region
             /// <summary>
             /// Prediction Code Created By Group Metaverse - Mahdieh Pirmoradian
-            /// for comparing the Test Image average Similarity to each category of Previous Trained Images
+            /// for comparing the Test Image Similarity {Avg, Max & Min} to each category of Previous Trained Images
             /// </summary>
-            /// <param name="sdrOfInputImage">SDR of the Input Test image that needs to be compared with previous trained set</param>
+            /// <param name="sdrInputTestImage">SDR of the Input Test image that needs to be compared with previous trained set</param>
             /// <param name="sdrs">dictionary of SDRs of trained Input images<</param>
-            /// <returns> predictedLableCat which is the name of Predicted_Lable_Category; </returns>
-            string PredictLabel(int[] sdrOfInputImage, Dictionary<string, int[]> sdrs)
+            /// <returns> predictedLableCat which is the name of Predicted Category Lable; </returns>
+            string PredictLabel(int[] sdrInputTestImage, Dictionary<string, int[]> sdrs)
             {
                 //This variable is used for comparing the similarity of Input Test Image with each trained input SDR
-                double comparedSimilarity = 0;
-                //Temporal Holder of the last highest similar SDR
-                double tempralHolder = 0;
-                //This variable is used for keeping the maximum predicted similarity percentage
-                double maxPredictedLable = 0;
+                int comparedSimilarity = 0;
+                //maxSimilarity of the highest similar SDR in each Category with the Input Test Image
+                int maxSimilarity = 0;
+                //This variable is used for keeping the maximum predicted similarity overall
+                int maxPredictedSimilarity = 0;
+                //This variable is used for keeping the Lable of predicted Category
                 string predictedLableCat = "";
 
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
                 {
-                    double avgSimilarity = 0;
+                
+                    List<int> list1 = new();
+                    int totalsum = 0;
+                    int totalnum = 0;
+                    int avgSimilarity = 0;
+                    int minSimilarity = 0;
+
                     // loop of each folder in input folder
                     var classLabel2 = secondEntry.Key;
                     var filePathList2 = secondEntry.Value;
                     var numberOfImages2 = filePathList2.Count;
-                    for (int j = 0; j < numberOfImages2; j++) // loop of each image in each category of inputs
+                    // loop of each image in each category of inputs
+                    for (int j = 0; j < numberOfImages2; j++) 
                     {
                         if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
                         string fileNameofTestImage = Path.GetFileNameWithoutExtension(TestFolder);
@@ -150,37 +166,47 @@ namespace ConsoleApp
 
 
                         //calculating the similarity of the current itterated image with the input Test image
-                        comparedSimilarity = MathHelpers.CalcArraySimilarity(sdrOfInputImage, sdr2);
-                        avgSimilarity += comparedSimilarity;
-
+                        comparedSimilarity = (int)MathHelpers.CalcArraySimilarity(sdrInputTestImage, sdr2);
+                        list1.Add(comparedSimilarity);
+                        
+                        
+                            totalsum += comparedSimilarity;
+                            totalnum = numberOfImages2;
+                        
+                        
                         //if the similarity of input image with the right now-itterated image is more than
                         //the similarity of the input Test image and last itterated image
-                        if (comparedSimilarity > tempralHolder)
+                        if (comparedSimilarity > maxSimilarity)
                         {
-                            tempralHolder = comparedSimilarity;
+                            maxSimilarity = comparedSimilarity;
                             predictedLableCat = secondEntry.Key;
 
                         }
+                        minSimilarity = (int)list1.Min();
 
                     }
                     //calculating the Average similarity of the Input_Tested_Image with the current each category of Trained_Images
-                    avgSimilarity /= 4;
+                    avgSimilarity = ((int)(totalsum / totalnum));
+                    
 
-                    if (avgSimilarity > maxPredictedLable)
+                    if (avgSimilarity > maxPredictedSimilarity)
                     {
-                        maxPredictedLable = avgSimilarity;
+                        maxPredictedSimilarity = avgSimilarity;
                     }
-                    Console.WriteLine("\nSimilarity: To Category  " + secondEntry.Key + "  " + avgSimilarity);
+                    
+                    Console.WriteLine("\nSimilarity To Category  " + secondEntry.Key + "  " + avgSimilarity + "  ,Max Similarity: " + maxSimilarity + "  ,Min Similarity: " + minSimilarity);
                 }
 
-
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.Black;
                 //printing the highest similarity of the Input_Tested_Image with the previous Trained_Images category
-                Console.WriteLine("\nSimilarity: " + maxPredictedLable);
+                Console.WriteLine("\n  With Similarity  " + maxPredictedSimilarity + "  To category " + predictedLableCat );
                 return predictedLableCat;
 
             }
-
+            #endregion
         }
+
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
         {
