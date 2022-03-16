@@ -31,9 +31,9 @@ namespace ConsoleApp
                     });
                     var values = dic.ToDictionary(p => p.Key, p => p.Value).Values.ToList();
                     var tempStat = new Dictionary<string, double>();
-                    tempStat["Max"] = values.Max();
-                    tempStat["Avg"] = values.Average();
-                    tempStat["Min"] = values.Min();
+                    tempStat["Max"] = Math.Round(values.Max(), 2);
+                    tempStat["Avg"] = Math.Round(values.Average(), 2);
+                    tempStat["Min"] = Math.Round(values.Min(), 2);
                     string tempKey = $"{label1}__{label2}";
                     statistics.Add(tempKey, tempStat);
                 }

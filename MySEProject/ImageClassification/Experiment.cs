@@ -94,12 +94,12 @@ namespace ConsoleApp
 
 
             //for getting the Input Correlation results out, for exp. between Hexagonh1__Hexagonh2  
-            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__HexagonH2 : " + listInputCorrelation["Hexagonh1__Hexagonh2"]);
-            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__TriangleT1 : " + listInputCorrelation["Hexagonh1__TriangleT1"]);
+            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__HexagonH2 : " + Math.Round(listInputCorrelation["Hexagonh1__Hexagonh2"],2));
+            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__TriangleT1 : " + Math.Round(listInputCorrelation["Hexagonh1__TriangleT1"],2));
 
             //for getting the Output Correlation results out, for exp. between Hexagonh1__Hexagonh2 
-            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__HexagonH2 : " + listCorrelation["Hexagonh1__Hexagonh2"]);
-            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__TriangleT1 : " + listCorrelation["Hexagonh1__TriangleT1"]);
+            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__HexagonH2 : " + Math.Round(listCorrelation["Hexagonh1__Hexagonh2"],2));
+            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__TriangleT1 : " + Math.Round(listCorrelation["Hexagonh1__TriangleT1"],2));
 
             //This Lines are for reading the TestFolder image which is saved By name B.jpg inside of TestFolder
             string MyProjectDir = DirProject();
