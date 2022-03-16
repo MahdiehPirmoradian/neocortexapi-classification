@@ -1,7 +1,6 @@
 {
   "TemporalMemory": {},
   "SpatialPooler": {},
-  //"InhibitionRadius": 1,
   "InputTopology": null,
   "ColumnTopology": null,
   "NumInputs": 1,
