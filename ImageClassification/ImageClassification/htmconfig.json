@@ -22,7 +22,7 @@
   "SynPermMin": 0.0,
   "InitialSynapseConnsPct": 0.5,
   "InputMatrix": null,
-  "NumActiveColumnsPerInhArea": 170,
+  "NumActiveColumnsPerInhArea": 180,
   "MinPctOverlapDutyCycles": 0.1,
   "MinPctActiveDutyCycles": 0.1,
   "PredictedSegmentDecrement": 0.1,
