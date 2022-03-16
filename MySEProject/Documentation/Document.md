@@ -15,7 +15,7 @@ We looked over 70 diverse HTM network setups in total. the Goal was to get the b
 ## Progress of the project
 1) Two different types of Prediction Code is created and are working accurately. one is comparing the similarity of the input test-image to average similarity of the images of each category, while another one compares the input test-image to all images and choose the image with most similarity and returns its category as the predicted category.  
 2) An excel database of output information of the system is created and diagrams for comparison with different Htm Configs was created.
-3) One [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Mahdieh) has done Experiments for variable Potential Radiuos while changing the Local Area Density. and another [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid) has investigate the NumActiveColumnsPerInhArea and Local and Global Inhibition parameters.
+3) One [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/main/MySEProject/Experiments/Variable%20Local%20Area%20Density%20%26%20Potential%20Radious) has done Experiments for variable Potential Radiuos while changing the Local Area Density. and another [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid) has investigate the NumActiveColumnsPerInhArea and Local and Global Inhibition parameters.
 4) We also added some comments to make the code more readable and easier to understand.
 5) We also worked on some warnings of the Ecperiment class and solved them.
 6) the input test-image path doesnt need to be written completely, but its adressed based on the folder in which the program is running.
