@@ -95,7 +95,7 @@ namespace ConsoleApp
             var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
 
             /// <summary>
-            /// the prediction Code created by group Metaverse - Omid Nikbakht
+            /// the prediction Code created by Team Metaverse 
             /// </summary>
             /// <param name="sdrOfInputImage"> sdr of the input image which should be compared to the trained ones</param>
             /// <param name="sdrs"> dictionary of the sdrs of all images whith which we trained the system</param>
@@ -105,11 +105,11 @@ namespace ConsoleApp
                 int num = 0;
                 // currentComparedSimilarity is gonna be used as  holder of the current compared similarity
                 double currentComparedSimilarity = 0;
+                //mainListOfComparisons is a dictionary which holds the whole similarities of all categories as a dictionary
+                Dictionary<string, List<int>> mainListOfComparisons = new Dictionary<string, List<int>>();
 
                 string category = "";
-                int[] Hexagon = new int[4]; ;
-                int[] Triangle = new int[4];
-                int[] StraightCross = new int[4];
+                
 
                 //looping each folder in our inputFolder, where the training images are placed
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
@@ -135,52 +135,53 @@ namespace ConsoleApp
                         //getting the category of currently compared image(among the trained images)
                         category = secondEntry.Key;
 
-                        // adding each similarity to its own category, and creating a list of similarities to input image, for each category
-                        if (category == "Hexagon")
+
+                        //creating new key or adding value to existing key
+                        if (mainListOfComparisons.ContainsKey(category))
                         {
-                            Hexagon[j] = num;
+                            //If the current key being checked is already in the Dictionary the thesimilarity o current checked image will be added to lt thi key   
+                            mainListOfComparisons[category].Add(num);
                         }
-                        else if (category == "Triangle")
+                        else
                         {
-                            Triangle[j] = num;
+                            //if key does not exixst(we entered a new category) then create a key for this category and assign similarity of already checked image to it
+                            mainListOfComparisons.Add(category, new List<int>() { num });
                         }
-                        else { StraightCross[j] = num; }
 
                     }
+
                 }
 
-                //averageCalculation
-                int HexagonAvg = (Hexagon.Sum()) / (Hexagon.Length);
-                int TriangleAvg = (Triangle.Sum()) / (Triangle.Length);
-                int StraightCrossAvg = (StraightCross.Sum()) / (StraightCross.Length);
-                Console.WriteLine("---------------");
-                Console.WriteLine("Average similarity to Hexagon: "+HexagonAvg+"%");
-                Console.WriteLine("Average similarity to Triangle: " + TriangleAvg + "%");
-                Console.WriteLine("Average similarity to StraightCross: " + StraightCrossAvg + "%");
-                Console.WriteLine("---------------") ;
+                foreach (KeyValuePair<string, List<int>> entry in mainListOfComparisons)
+                {
+                    // do something with entry.Value or entry.Key
+                    foreach (int gh in entry.Value)
+                        Console.WriteLine("category :" + entry.Key + " similarity: " + gh);
+                }
 
-
-
-
-
-                //mentioning the highest and lowest similarity of the input image with the iterated trained images
-
-
-                Console.WriteLine("MaxSimilarity to Hexagon = " + Hexagon.Max());
-                
-                Console.WriteLine("MaxSimilarity to Triangle = " + Triangle.Max());
-
-                Console.WriteLine("MaxSimilarity to StraightCross = " + StraightCross.Max());
-                Console.WriteLine("---------------") ;
-
-                Console.WriteLine("MinSimilarity to Hexagon = " + Hexagon.Min());
-
-                Console.WriteLine("MinSimilarity to Triangle = " + Triangle.Min());
-
-                Console.WriteLine("MinSimilarity to StraightCross = " + StraightCross.Min());
-
+                int MaxSim = 0;
+                int MinSim = 101;
+                string MaxSimCat = "";
+                string MinSimCat = "";
+                //// average calculation
+                Console.WriteLine("---------------\n Average similarity of Test-Image to each category");
+                foreach (KeyValuePair<string, List<int>> entry in mainListOfComparisons)
+                {
+                    Console.WriteLine( entry.Key + " Average =" + (entry.Value.Sum()) / entry.Value.Count);
+                    if (entry.Value.Max() > MaxSim)
+                    {
+                        MaxSim = entry.Value.Max();
+                        MaxSimCat = entry.Key;
+                    }
+                    if (entry.Value.Min() < MinSim)
+                    {
+                        MinSim = entry.Value.Min();
+                        MinSimCat = entry.Key;
+                    }
+                }
+                Console.WriteLine("---------------\n Maximum similarity of Test-Image\n" + " Maximum Similarity happens with " + MaxSimCat + " category and = " + MaxSim);
+                Console.WriteLine("---------------\n Mainimum similarity of Test-Image\n" + " Minimum Similarity happens with " + MinSimCat + " category and = " + MinSim);
                 return category;
-
             }
 
 
@@ -189,7 +190,7 @@ namespace ConsoleApp
             // calling the prediction function and puting its output in "predictedLable" varriable
             string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
             //mentioning the category to which the input image has te mot smilarity
-            Console.WriteLine($"The image is predicted as {predictedLabel}");
+            Console.WriteLine($"The image is predicted as {predictedLabel} based on maximum similarity");
         }
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
@@ -337,7 +338,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 300;
+            int maxSPLearningCycles = 1;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
