@@ -94,7 +94,7 @@ namespace ConsoleApp
 
 
             //for getting the Input Correlation results out, for exp. between Hexagonh1__Hexagonh2  
-            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__HexagonH2 : " + Math.Round(listInputCorrelation["Hexagonh1__Hexagonh2"],2));
+            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__HexagonH2 : " + Math.Round(listInputCorrelation["Hexagonh1__Hexagonh2"], 2));
             Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__TriangleT1 : " + Math.Round(listInputCorrelation["Hexagonh1__TriangleT1"],2));
 
             //for getting the Output Correlation results out, for exp. between Hexagonh1__Hexagonh2 
