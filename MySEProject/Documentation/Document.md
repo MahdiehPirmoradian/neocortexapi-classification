@@ -39,10 +39,11 @@ This project is the implementaiton of the command line interfaca for the image c
  ![](Images/WorkingDirectory.png)
  
 The imagesets are stored inside "InputFolder".  
-![inputFolder image](https://user-images.githubusercontent.com/77645707/158067271-92a222f7-2513-47a7-960c-600174059ddf.jpg)
+![InputInstructions1](https://user-images.githubusercontent.com/74245613/158728179-428e3c0a-1b88-4ea6-992d-d6b5d0f3a31f.JPG)
 
-Please first time after cloning the branch, copy this Input Folder and placed it in the shown path:
-![InputInstructions](https://user-images.githubusercontent.com/74245613/158727676-2e8177b0-ba1a-43a9-ae6e-dadc6e37aed3.JPG)
+
+Please first time after cloning the project, copy this InputFolder and placed it in the shown path:
+![InputInstructions](https://user-images.githubusercontent.com/74245613/158728192-280c8dba-9f69-4576-82a9-2ccd48d5f95d.JPG)
 
 
 
