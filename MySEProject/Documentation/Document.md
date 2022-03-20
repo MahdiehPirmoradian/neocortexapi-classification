@@ -38,17 +38,19 @@ This project is the implementaiton of the command line interfaca for the image c
 
  ![](Images/WorkingDirectory.png)
  
-The imagesets are stored inside "InputFolder/".  
-![inputFolder image](https://user-images.githubusercontent.com/77645707/158067271-92a222f7-2513-47a7-960c-600174059ddf.jpg)
+The imagesets are stored inside "InputFolder".  
+![InputInstructions1](https://user-images.githubusercontent.com/74245613/158728179-428e3c0a-1b88-4ea6-992d-d6b5d0f3a31f.JPG)
 
 
-Each Imageset is stored inside a folder whose name is the set's label.  
-![inputfolder sample with images](https://user-images.githubusercontent.com/77645707/158067340-11486572-420c-47bf-b1cb-3e09cd3eefa0.jpg)
+Please first time after cloning the project, copy this InputFolder and placed it in the shown path:
+![InputInstructions](https://user-images.githubusercontent.com/74245613/158728192-280c8dba-9f69-4576-82a9-2ccd48d5f95d.JPG)
 
-for entering the test-image create a folder named "TestFolder" in the shown path, and put the test-image in it  : 
-![testimage input folder](https://user-images.githubusercontent.com/77645707/158067461-8fb78505-0879-45af-9be0-98740ef1e84b.jpg)
-*** name the test-image "B.jpg" please
-![test image place](https://user-images.githubusercontent.com/77645707/158067596-e8af236a-d481-402d-bdeb-cb17cb23419e.jpg)
+
+
+
+Test Image is inside the TestFolder in the shown path with the name B.jpg, You can replace it. Just *** name the test-image as "B.jpg" please.
+![TestInstructions](https://user-images.githubusercontent.com/74245613/158727004-b2724b37-b40f-4cf3-820f-e88f3ddab6d9.JPG)
+
 
 
 
