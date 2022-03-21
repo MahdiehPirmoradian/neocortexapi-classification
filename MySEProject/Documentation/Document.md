@@ -6,8 +6,9 @@ The images DataSet for training process are chosen from the following link: [Dat
 
 
 They are 60x60 pixles images Hand Drawn Shapes. 
+![Input1](https://user-images.githubusercontent.com/74245613/159304001-e37fef08-c3c0-4f7e-98aa-02b3bcf05c9b.JPG)
 
-![Inputt](https://user-images.githubusercontent.com/74245613/159240591-340602e8-776f-4556-8cff-5478d8248910.JPG)
+
 
 
 We looked over 100 diverse HTM network setups in total. the Goal was to get the best results of learning and prediction, while variying parameters of htmConfig file in a specific range. after implementaion of these enhancements, the HTM system should be able to learn the specifications of images per each category, so that when we enter an image as a test-image, the system is able to tell us how high is the possibility of belonging the test-image to each of the learned categories.
