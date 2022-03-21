@@ -9,7 +9,7 @@ They are 60x60 pixles images Hand Drawn Shapes.
 
 ![image](https://user-images.githubusercontent.com/77645707/158065860-4f6ad693-8138-4a44-ac90-e8d2f2d7b42c.png)
 
-We looked over 70 diverse HTM network setups in total. the Goal was to get the best results of learning and prediction, while variying parameters of htmConfig file in a specific range. after implementaion of these enhancements, the HTM system should be able to learn the specifications of images per each category, so that when we enter an image as a test-image, the system is able to tell us how high is the possibility of belonging the test-image to each of the learned categories.
+We looked over 100 diverse HTM network setups in total. the Goal was to get the best results of learning and prediction, while variying parameters of htmConfig file in a specific range. after implementaion of these enhancements, the HTM system should be able to learn the specifications of images per each category, so that when we enter an image as a test-image, the system is able to tell us how high is the possibility of belonging the test-image to each of the learned categories.
 
 
 ## Progress of the project
@@ -64,3 +64,5 @@ Test Image is inside the TestFolder in the shown path with the name B.jpg, You c
  Multiple experiments can therefore be conducted via changes of parameters in the json file. 
  For a reference on what each parameter does, please refer to []() on [neocortexapi](https://github.com/ddobric/neocortexapi) 
  
+ The best output after changing the htm configuration is shown here
+ ![image](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/main/MySEProject/Experiments/Variable%20Local%20Area%20Density%20%26%20Potential%20Radious/Best%20Experiment%20Variable%20Local%20AreaDensity%26PotentialRadious.JPG)
