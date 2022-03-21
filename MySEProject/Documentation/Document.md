@@ -64,5 +64,8 @@ Test Image is inside the TestFolder in the shown path with the name B.jpg, You c
  Multiple experiments can therefore be conducted via changes of parameters in the json file. 
  For a reference on what each parameter does, please refer to []() on [neocortexapi](https://github.com/ddobric/neocortexapi) 
  
- The best output after changing the htm configuration is shown here
+ The best output for LocalAreaDensity and PotentialRadius is shown here
  ![image](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/main/MySEProject/Experiments/Variable%20Local%20Area%20Density%20%26%20Potential%20Radious/Best%20Experiment%20Variable%20Local%20AreaDensity%26PotentialRadious.JPG)
+
+The best output for NumActiveColumnsPerInhArea PotentialRadius is shown here
+![bedune khatte-local- NumActive-30-PotRad-20](https://user-images.githubusercontent.com/77645707/159194666-1ebc1f2b-0003-431b-a301-61494cec47b8.jpg)
