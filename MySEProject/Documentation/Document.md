@@ -57,90 +57,12 @@ Please first time after cloning the project, copy this InputFolder and placed it
 
 ###  Prediction Part :
 
-Below are some codes which we wrote to predict to which category the Input test image belongs to.
+Below are link to the Prediction code which we wrote to predict to which category the Input test image belongs to.
+https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/d40b281accc17316ca89ceadb6193eab6e3b4224/MySEProject/ImageClassification/Experiment.cs#L127
 
 
 
-
-            /// <summary>
-            /// Prediction Code Created By Group Metaverse - Mahdieh Pirmoradian
-            /// for comparing the Test Image Similarity {Avg, Max & Min} to each category of Previous Trained Images
-            /// </summary>
-            /// <param name="sdrInputTestImage">SDR of the Input Test image that needs to be compared with previous trained set</param>
-            /// <param name="sdrs">dictionary of SDRs of trained Input images<</param>
-            /// <returns> predictedLableCat which is the name of Predicted Category Lable; </returns>
-            string PredictLabel(int[] sdrInputTestImage, Dictionary<string, int[]> sdrs)
-            {
-                //This variable is used for comparing the similarity of Input Test Image with each trained input SDR
-                int comparedSimilarity = 0;
-                //maxSimilarity of the highest similar SDR in each Category with the Input Test Image
-                int maxSimilarity = 0;
-                //This variable is used for keeping the maximum predicted similarity overall
-                int maxPredictedSimilarity = 0;
-                //This variable is used for keeping the Lable of predicted Category
-                string predictedLableCat = "";
-
-                foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
-                {
-                
-                    List<int> list1 = new();
-                    int totalsum = 0;
-                    int totalnum = 0;
-                    int avgSimilarity = 0;
-                    int minSimilarity = 0;
-
-                    // loop of each folder in input folder
-                    var classLabel2 = secondEntry.Key;
-                    var filePathList2 = secondEntry.Value;
-                    var numberOfImages2 = filePathList2.Count;
-                    // loop of each image in each category of inputs
-                    for (int j = 0; j < numberOfImages2; j++) 
-                    {
-                        if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
-                        string fileNameofTestImage = Path.GetFileNameWithoutExtension(TestFolder);
-                        string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
-                        string temp = $"{"entered image" + fileNameofTestImage}__{classLabel2 + fileNameOfSecondImage}";
-
-
-                        //calculating the similarity of the current itterated image with the input Test image
-                        comparedSimilarity = (int)MathHelpers.CalcArraySimilarity(sdrInputTestImage, sdr2);
-                        list1.Add(comparedSimilarity);
-                        
-                        
-                            totalsum += comparedSimilarity;
-                            totalnum = numberOfImages2;
-                        
-                        
-                        //if the similarity of input Test image with the right now-itterated image is more than
-                        //the similarity of the input Test image and last itterated image
-                        if (comparedSimilarity > maxSimilarity)
-                        {
-                            maxSimilarity = comparedSimilarity;
-                            predictedLableCat = secondEntry.Key;
-
-                        }
-                        minSimilarity = (int)list1.Min();
-
-                    }
-                    //calculating the Average similarity of the Input_Tested_Image with the current category of Trained_Images
-                    avgSimilarity = ((int)(totalsum / totalnum));
-                    
-
-                    if (avgSimilarity > maxPredictedSimilarity)
-                    {
-                        maxPredictedSimilarity = avgSimilarity;
-                    }
-                    
-                    Console.WriteLine("\nSimilarity To Category  " + secondEntry.Key + "  " + avgSimilarity + "  ,Max Similarity: " + maxSimilarity + "  ,Min Similarity: " + minSimilarity);
-                }
-
-                Console.BackgroundColor = ConsoleColor.Cyan;
-                Console.ForegroundColor = ConsoleColor.Black;
-                //printing the highest similarity of the Input_Tested_Image with the previous Trained_Images category
-                Console.WriteLine("\n  With Similarity  " + maxPredictedSimilarity + "  To category " + predictedLableCat );
-                return predictedLableCat;
-
-            }
+          
             
 
 
