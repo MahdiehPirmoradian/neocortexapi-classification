@@ -6,7 +6,7 @@ The images DataSet for training process are chosen from the following link: [Dat
 
 
 They are 60x60 pixles images Hand Drawn Shapes. 
-![Input1](https://user-images.githubusercontent.com/74245613/159304001-e37fef08-c3c0-4f7e-98aa-02b3bcf05c9b.JPG)
+![Input1](https://user-images.githubusercontent.com/74245613/159688485-5d11ff47-3b50-4837-8810-042fdd5e1387.JPG)
 
 
 
