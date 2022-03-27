@@ -52,7 +52,7 @@ namespace ConsoleApp
 
             Dictionary<string, double> listCorrelation = new();
             Dictionary<string, double> listInputCorrelation = new();
-            foreach (KeyValuePair<string, List<string>> entry in inputsPath) // loop of the folder (classes) eg: Apple, banana, etc
+            foreach (KeyValuePair<string, List<string>> entry in inputsPath) // loop of the folder (classes) eg: Hexagon, Triangle, etc
             {
                 var classLabel = entry.Key;
                 var filePathList = entry.Value;
@@ -62,12 +62,13 @@ namespace ConsoleApp
                 {
                     if (!sdrs.TryGetValue(filePathList[i], out var sdr1)) continue;
                     
-                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { // loop of the folder (again)
+                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) 
+                    { // loop of the folder (again)
                         var classLabel2 = secondEntry.Key;
                         var filePathList2 = secondEntry.Value;
                         var numberOfImages2 = filePathList2.Count;
                         for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
-                            {
+                        {
                                 if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
                                 string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
                                 string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
@@ -88,7 +89,13 @@ namespace ConsoleApp
 
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
-            
+
+            //showing Correlation Matrix of Image Categories before of training
+            Console.WriteLine("Correlation Matrix of Images Categories before of training is shown below");
+            helperFunc.printSimilarityMatrix(listInputCorrelation, "both", classes);
+
+            //showing Correlation Matrix of Image Categories after training
+            Console.WriteLine("Correlation Matrix of Images Categories after of training with HTM is shown below");
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
 
 
@@ -101,28 +108,50 @@ namespace ConsoleApp
             Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__HexagonH2 : " + Math.Round(listCorrelation["Hexagonh1__Hexagonh2"],2));
             Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__TriangleT1 : " + Math.Round(listCorrelation["Hexagonh1__TriangleT1"],2));
 
-            //This Lines are for reading the TestFolder image which is saved By name B.jpg inside of TestFolder
-            string MyProjectDir = DirProject();
-            string TestFolder = MyProjectDir + "\\ImageClassification\\TestFolder\\B.jpg";
+
+
             //prediction code
-            //Input Image encoding
-            int[] encodedInputImage = ReadImageData(TestFolder, width,height);
-            var temp1 = cortexLayer.Compute(encodedInputImage, false);
-
-            // This is a general way to get the SpatialPooler result from the layer.
-            var activeColumns = cortexLayer.GetResult("sp") as int[];
-
-            var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
-
-
-
-            Console.WriteLine("\n\nNow for the Test Image.......................");
-            // calling the prediction function for Printing out Name of the category to which the
-            // input Test Image has te mot smilarity
-            string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
-            Console.WriteLine($"The image is predicted as {predictedLabel}");
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n\n...............................Now for the Test Images...............................");
+            Console.ResetColor();
+            Console.WriteLine("\n");
+            //This Lines are for reading the Test images name which are saved  inside of TestFolder
+            string myProjectDir = DirProject();
+            string testdir = myProjectDir + "\\ImageClassification\\TestFolder";
+            string[] testfiles = new DirectoryInfo(testdir).GetFiles().Select(o => o.Name).ToArray();
+            //getting the path of all test images with extension .jpg inside the testdir
+            string[] testpath = Directory.GetFiles(@testdir, "*.jpg", SearchOption.AllDirectories);
+            //string testpath = testdir + "\\" + testfiles[0];
+            
+            for(int i = 0; i < testfiles.Length; i++)
+            {
+                string testfilesname = Path.GetFileNameWithoutExtension(testfiles[i]);
+                Console.WriteLine($"When Input Test Image is     {testfilesname}:");
+                //Input Image encoding
+                int[] encodedInputImage = ReadImageData(testpath[i], width, height);
+                var temp1 = cortexLayer.Compute(encodedInputImage, false);
+
+                // This is a general way to get the SpatialPooler result from the layer.
+                var activeColumns = cortexLayer.GetResult("sp") as int[];
+
+                var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
+                // calling the prediction function for Printing out Name of the category to which the
+                // input Test Image has te most smilarity
+                string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
+                Console.WriteLine($"Input Test Image {testfilesname} is predicted as {predictedLabel}\n");
+                Console.WriteLine("**********************************************************************************");
+                
+
+            }
+           
+            
+
+
+
+           
+            
+          
 
             #region
             /// <summary>
@@ -135,22 +164,22 @@ namespace ConsoleApp
             string PredictLabel(int[] sdrInputTestImage, Dictionary<string, int[]> sdrs)
             {
                 //This variable is used for comparing the similarity of Input Test Image with each trained input SDR
-                int comparedSimilarity = 0;
+                double comparedSimilarity = 0;
                 //maxSimilarity of the highest similar SDR in each Category with the Input Test Image
-                int maxSimilarity = 0;
+                double maxSimilarity = 0;
                 //This variable is used for keeping the maximum predicted similarity overall
-                int maxPredictedSimilarity = 0;
+                double maxPredictedSimilarity = 0;
                 //This variable is used for keeping the Lable of predicted Category
                 string predictedLableCat = "";
 
                 foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
                 {
                 
-                    List<int> list1 = new();
-                    int totalsum = 0;
-                    int totalnum = 0;
-                    int avgSimilarity = 0;
-                    int minSimilarity = 0;
+                    List<double> list1 = new();
+                    double totalsum = 0;
+                    double totalnum = 0;
+                    double avgSimilarity = 0;
+                    double minSimilarity = 0;
 
                     // loop of each folder in input folder
                     var classLabel2 = secondEntry.Key;
@@ -160,13 +189,13 @@ namespace ConsoleApp
                     for (int j = 0; j < numberOfImages2; j++) 
                     {
                         if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
-                        string fileNameofTestImage = Path.GetFileNameWithoutExtension(TestFolder);
+                        string fileNameofTestImage = Path.GetFileNameWithoutExtension(testdir);
                         string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
                         string temp = $"{"entered image" + fileNameofTestImage}__{classLabel2 + fileNameOfSecondImage}";
 
 
                         //calculating the similarity of the current itterated image with the input Test image
-                        comparedSimilarity = (int)MathHelpers.CalcArraySimilarity(sdrInputTestImage, sdr2);
+                        comparedSimilarity = MathHelpers.CalcArraySimilarity(sdrInputTestImage, sdr2);
                         list1.Add(comparedSimilarity);
                         
                         
@@ -182,25 +211,36 @@ namespace ConsoleApp
                             predictedLableCat = secondEntry.Key;
 
                         }
-                        minSimilarity = (int)list1.Min();
+                        minSimilarity = list1.Min();
 
                     }
                     //calculating the Average similarity of the Input_Tested_Image with the current each category of Trained_Images
-                    avgSimilarity = ((int)(totalsum / totalnum));
+                    avgSimilarity = (totalsum / totalnum);
                     
 
                     if (avgSimilarity > maxPredictedSimilarity)
                     {
                         maxPredictedSimilarity = avgSimilarity;
                     }
-                    
-                    Console.WriteLine("\nSimilarity To Category  " + secondEntry.Key + "  " + avgSimilarity + "  ,Max Similarity: " + maxSimilarity + "  ,Min Similarity: " + minSimilarity);
+                    avgSimilarity = Math.Round(avgSimilarity, 0);
+                    maxSimilarity = Math.Round(maxSimilarity, 0);
+                    minSimilarity = Math.Round(minSimilarity, 0);
+                    maxPredictedSimilarity = Math.Round(maxPredictedSimilarity, 0);
+
+                    Console.WriteLine("\nAVG Similarity To Category  " + secondEntry.Key + "  %" + avgSimilarity + "  ,Max Similarity: %" + maxSimilarity + "  ,Min Similarity: %" + minSimilarity);
                 }
 
-                Console.BackgroundColor = ConsoleColor.Cyan;
-                Console.ForegroundColor = ConsoleColor.Black;
+
+                Console.ForegroundColor = ConsoleColor.White;
+
+                if (maxPredictedSimilarity < 40)
+                {
+                    Console.WriteLine("This Image does not belong to any category of trained images ");
+                    predictedLableCat = " non trained Input Category";
+                }
                 //printing the highest similarity of the Input_Tested_Image with the previous Trained_Images category
-                Console.WriteLine("\n  With Similarity  " + maxPredictedSimilarity + "  To category " + predictedLableCat );
+                else
+                    Console.WriteLine("\nWith AVG Similarity  " + maxPredictedSimilarity + "%  To category " + predictedLableCat);
                 return predictedLableCat;
 
             }
