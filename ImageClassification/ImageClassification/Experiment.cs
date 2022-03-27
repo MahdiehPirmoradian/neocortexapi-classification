@@ -71,6 +71,10 @@ namespace ConsoleApp
             }
 
             var classes = inputsPath.Keys.ToList();
+
+            //showing Correlation Matrix of Image Categories before of training
+            Console.WriteLine("Correlation Matrix of Images Categories before of training is shown below");
+            helperFunc.printSimilarityMatrix(listInputCorrelation, "both", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
             //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
             helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
@@ -190,7 +194,7 @@ namespace ConsoleApp
             // calling the prediction function and puting its output in "predictedLable" varriable
             string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
             //mentioning the category to which the input image has te mot smilarity
-            Console.WriteLine($"The image is predicted as {predictedLabel} based on maximum similarity");
+            Console.WriteLine($"---------------\nThe image is predicted as {predictedLabel} based on maximum similarity");
         }
 
         private Tuple<Dictionary<string, int[]>, Dictionary<string, List<string>>> imageBinarization(List<string> directories, int width, int height)
@@ -338,7 +342,7 @@ namespace ConsoleApp
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Learning process will take 1000 iterations (cycles)
-            int maxSPLearningCycles = 1;
+            int maxSPLearningCycles = 400;
 
             // Save the result SDR into a list of array
             Dictionary<string, int[]> outputValues = new Dictionary<string, int[]>();
