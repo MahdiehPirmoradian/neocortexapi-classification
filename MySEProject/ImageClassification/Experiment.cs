@@ -19,7 +19,7 @@ namespace ConsoleApp
         /// <summary>
         /// Setiing the initialized parameters of the HTM 
         /// </summary>
-        public Experiment( ArgsConfig config)
+        public Experiment(ArgsConfig config)
         {
             expConfig = config;
             htmConfig = config.htmConfig;
@@ -30,21 +30,21 @@ namespace ConsoleApp
         /// turning Input Images into arrays of 0 & 1.
         /// </summary>
         public void run()
-        { 
+        {
             int height = htmConfig.InputDimensions[0];
             int width = htmConfig.InputDimensions[1];
 
             // By default it only returns subdirectories one level deep. 
             var directories = Directory.GetDirectories(expConfig.inputFolder).ToList();
-            
-            (   Dictionary<string, int[]> binaries, // List of Binarized images
+
+            (Dictionary<string, int[]> binaries, // List of Binarized images
                 Dictionary<string, List<string>> inputsPath // Path of the list of images found in the given folder
-            )   = imageBinarization(directories, width, height);
+            ) = imageBinarization(directories, width, height);
 
             // The key of the dictionary helps to keep track of which class the SDR belongs to
 
             //In the case of Black & White Pictures we use this line for training the Spatial Pooler
-            (Dictionary<string, int[]> sdrs,var cortexLayer) = SPTrain(htmConfig, binaries);
+            (Dictionary<string, int[]> sdrs, var cortexLayer) = SPTrain(htmConfig, binaries);
             //In the case of colorful images we use this line for training the Spatial Pooler
             //(Dictionary<string, int[]> sdrs2, var cortexLayer2) = SPTrain(htmConfig, binaries, colorThreshold );
 
@@ -61,22 +61,23 @@ namespace ConsoleApp
                 for (int i = 0; i < numberOfImages; i++) // loop of the images inside the folder
                 {
                     if (!sdrs.TryGetValue(filePathList[i], out var sdr1)) continue;
-                    
-                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath) { // loop of the folder (again)
+
+                    foreach (KeyValuePair<string, List<string>> secondEntry in inputsPath)
+                    { // loop of the folder (again)
                         var classLabel2 = secondEntry.Key;
                         var filePathList2 = secondEntry.Value;
                         var numberOfImages2 = filePathList2.Count;
                         for (int j = 0; j < numberOfImages2; j++) // loop of the images inside the folder
-                            {
-                                if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
-                                string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
-                                string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
-                                string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
-                                
-                                //for Listing the Correlation of Output SDRs
-                                listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
-                                //for Listing the Input Correlation
-                                listInputCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(binaries[filePathList[i]].IndexWhere((el) => el == 1), binaries[filePathList2[j]].IndexWhere((el) => el == 1)));
+                        {
+                            if (!sdrs.TryGetValue(filePathList2[j], out var sdr2)) continue;
+                            string fileNameofFirstImage = Path.GetFileNameWithoutExtension(filePathList[i]);
+                            string fileNameOfSecondImage = Path.GetFileNameWithoutExtension(filePathList2[j]);
+                            string temp = $"{classLabel + fileNameofFirstImage}__{classLabel2 + fileNameOfSecondImage}";
+
+                            //for Listing the Correlation of Output SDRs
+                            listCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(sdr1, sdr2));
+                            //for Listing the Input Correlation
+                            listInputCorrelation.Add(temp, MathHelpers.CalcArraySimilarity(binaries[filePathList[i]].IndexWhere((el) => el == 1), binaries[filePathList2[j]].IndexWhere((el) => el == 1)));
                         }
                     }
                 }
@@ -101,11 +102,11 @@ namespace ConsoleApp
 
             //for getting the Input Correlation results out, for exp. between Hexagonh1__Hexagonh2  
             Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__HexagonH2 : " + Math.Round(listInputCorrelation["Hexagonh1__Hexagonh2"], 2));
-            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__TriangleT1 : " + Math.Round(listInputCorrelation["Hexagonh1__TriangleT1"],2));
+            Console.WriteLine("INPUT Correlation Similarity_between_____HexagonH1__TriangleT1 : " + Math.Round(listInputCorrelation["Hexagonh1__TriangleT1"], 2));
 
             //for getting the Output Correlation results out, for exp. between Hexagonh1__Hexagonh2 
-            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__HexagonH2 : " + Math.Round(listCorrelation["Hexagonh1__Hexagonh2"],2));
-            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__TriangleT1 : " + Math.Round(listCorrelation["Hexagonh1__TriangleT1"],2));
+            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__HexagonH2 : " + Math.Round(listCorrelation["Hexagonh1__Hexagonh2"], 2));
+            Console.WriteLine("Output Correlation Similarity_between_____HexagonH1__TriangleT1 : " + Math.Round(listCorrelation["Hexagonh1__TriangleT1"], 2));
 
 
 
@@ -294,7 +295,7 @@ namespace ConsoleApp
             {
                 for (int i = 0; i < width; i++)
                 {
-                    vs[i] += inputVector[j * width + i].ToString()+',';
+                    vs[i] += inputVector[j * width + i].ToString() + ',';
                 }
             }
             return vs;
@@ -325,17 +326,17 @@ namespace ConsoleApp
             var doubleArray = bizer.GetArrayBinary();
             var hg = doubleArray.GetLength(1);
             var wd = doubleArray.GetLength(0);
-            var intArray = new int[hg*wd];
+            var intArray = new int[hg * wd];
 
             //we convert this binary array into an array of integers
             //because we use Hierarchichal Temporal Memory which use SDR and they are always Integers
             for (int j = 0; j < hg; j++)
             {
-                for (int i = 0;i< wd;i++)
+                for (int i = 0; i < wd; i++)
                 {
-                    intArray[j*wd+i] = (int)doubleArray[i,j,0];
+                    intArray[j * wd + i] = (int)doubleArray[i, j, 0];
                 }
-            } 
+            }
             return intArray;
         }
         /// <summary> Modified by Long Nguyen
@@ -343,7 +344,7 @@ namespace ConsoleApp
         /// </summary>
         /// <param name="cfg"></param> Spatial Pooler configuration by HtmConfig style
         /// <param name="inputValues"></param> Binary input vector (pattern) list
-        private static (Dictionary<string, int[]>,CortexLayer<object, object> cortexLayer) SPTrain(HtmConfig cfg, Dictionary<string, int[]> inputValues)
+        private static (Dictionary<string, int[]>, CortexLayer<object, object> cortexLayer) SPTrain(HtmConfig cfg, Dictionary<string, int[]> inputValues)
         {
             // Creates the htm memory.
             var mem = new Connections(cfg);
@@ -379,7 +380,7 @@ namespace ConsoleApp
             // Initializes the Spatial Pooler 
             sp.Init(mem, new DistributedMemory() { ColumnDictionary = new InMemoryDistributedDictionary<int, NeoCortexApi.Entities.Column>(1) });
 
-             //mem.TraceProximalDendritePotential(true);
+            //mem.TraceProximalDendritePotential(true);
 
             // It creates the instance of the neo-cortex layer.
             // Algorithm will be performed inside of that layer.
@@ -430,7 +431,7 @@ namespace ConsoleApp
                 if (isInStableState)
                     break;
             }
-            return (outputValues,cortexLayer);
+            return (outputValues, cortexLayer);
         }
 
         //This Line of code is used for returning the current path of the software which is used later for reading the Test Image
@@ -446,7 +447,7 @@ namespace ConsoleApp
 
             return DirProject;
         }
-        
+
 
     }
 }
