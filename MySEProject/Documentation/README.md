@@ -100,3 +100,14 @@ Test Image is inside the TestFolder in the shown path with the name B.jpg, You c
 ### The best output for NumActiveColumnsPerInhArea PotentialRadius is shown here
 
 ![bedune khatte-local- NumActive-30-PotRad-20](https://user-images.githubusercontent.com/77645707/159194666-1ebc1f2b-0003-431b-a301-61494cec47b8.jpg)
+
+#After Increasing the number of Input images
+After Increasing the number of Input images we get some high values for Macro values of some categories which was not desired:
+
+### Input Images:
+![1](https://user-images.githubusercontent.com/74245613/160406531-2e8e1e93-52e3-43f1-9023-c8e3107c6066.JPG)
+### Results
+![2](https://user-images.githubusercontent.com/74245613/160406546-f0e51ec7-1d42-4a2d-a3b1-2754cf3ccc27.JPG)
+![3](https://user-images.githubusercontent.com/74245613/160406578-83bf58dd-e693-42bf-9df5-80d799a9c6ce.JPG)
+
+
