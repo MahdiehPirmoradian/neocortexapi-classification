@@ -149,14 +149,9 @@ namespace ConsoleApp
 
 
 
-
-
-
-
-
             #region
             /// <summary>
-            /// Prediction Code Created By Group Metaverse - Mahdieh Pirmoradian
+            /// Prediction Code Created By Group Metaverse
             /// for comparing the Test Image Similarity {Avg, Max & Min} to each category of Previous Trained Images
             /// </summary>
             /// <param name="sdrInputTestImage">SDR of the Input Test image that needs to be compared with previous trained set</param>
