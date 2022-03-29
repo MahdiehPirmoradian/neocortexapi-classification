@@ -156,8 +156,11 @@ After Increasing the number of Input images we get some high values for Macro va
 
 
 ### Results
-![2](https://user-images.githubusercontent.com/74245613/160681544-207bb068-95b3-4456-bb50-3556b05a741e.JPG)
-![3](https://user-images.githubusercontent.com/74245613/160681551-10cc0b63-9ed4-448e-a66f-05c81efefe97.JPG)
+
+![2](https://user-images.githubusercontent.com/74245613/160682554-5ba7333f-8ceb-4784-a73c-8de11700a858.JPG)
+
+![3](https://user-images.githubusercontent.com/74245613/160682577-de392810-fd77-42e8-9da9-a43237b5365d.JPG)
+
 
 
 
