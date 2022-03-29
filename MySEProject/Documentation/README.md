@@ -142,11 +142,16 @@ After Increasing the number of Input images we get some high values for Macro va
 
 **Input similaity:**
 
+![1](https://user-images.githubusercontent.com/74245613/160682070-e26ccd70-ea3e-4fed-97fb-b6b1f04c69db.JPG)
 
-![1](https://user-images.githubusercontent.com/74245613/160407655-1b017536-2181-47ad-b4ff-4c01e331b255.JPG)
+
+
+
 
 
 **Output similaity:**
+
+![11](https://user-images.githubusercontent.com/74245613/160682036-20a59c0c-75f0-4cbb-9d2a-0cc0cfb11b81.JPG)
 
 
 
