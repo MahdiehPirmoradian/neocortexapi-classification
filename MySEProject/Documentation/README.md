@@ -118,7 +118,7 @@ please give the desired Test Images  inside the TestFolder in the shown path:
 
 
 
-### Results:
+### Results of Prediction Part:
   
   
  
