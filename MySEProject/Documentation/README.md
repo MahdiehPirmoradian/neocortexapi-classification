@@ -1,52 +1,96 @@
 
-# NeocortexApi-Project **Image Classification**
+# NeocortexApi-Application: **(Analyze Image Classification )**
 
-
-The images DataSet for training process are chosen from the following link: [DataSetImages](https://www.kaggle.com/abdurrahumaannazeer/handdrawnshapes)
-
-
-They are 60x60 pixles images Hand Drawn Shapes. 
-![Input1](https://user-images.githubusercontent.com/74245613/159688485-5d11ff47-3b50-4837-8810-042fdd5e1387.JPG)
-
-
-
-
-We looked over 100 diverse HTM network setups in total. the Goal was to get the best results of learning and prediction, while variying parameters of htmConfig file in a specific range. after implementaion of these enhancements, the HTM system should be able to learn the specifications of images per each category, so that when we enter an image as a test-image, the system is able to tell us how high is the possibility of belonging the test-image to each of the learned categories.
-
-
-## Progress of the project
-1) Two different types of Prediction Code is created and are working accurately. one is comparing the similarity of the input test-image to average similarity of the images of each category, while another one compares the input test-image to all images and choose the image with most similarity and returns its category as the predicted category.  
-2) An excel database of output information of the system is created and diagrams for comparison with different Htm Configs was created.
-3) One [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/main/MySEProject/Experiments/Variable%20Local%20Area%20Density%20%26%20Potential%20Radious) has done Experiments for variable Potential Radiuos while changing the Local Area Density. and another [user](https://github.com/MahdiehPirmoradian/neocortexapi-classification/commits/Omid) has investigate the NumActiveColumnsPerInhArea and Local and Global Inhibition parameters.
-4) We also added some comments to make the code more readable and easier to understand.
-5) We also worked on some warnings of the Ecperiment class and solved them.
-6) the input test-image path doesnt need to be written completely, but its adressed based on the folder in which the program is running.
-
-
-## In-Progress
-1) Working on docx, pdf, pptx and mp4.
-2) Planing more experiments to discover the behavior of system, while changing the above mentioned htmConfig parameters in even wider ranges.
-
-
+This work is a new approach to image classification based on open HTM version algorithm.
+The primary goal was to investigate open-source implementation of the Hierarchical Temporal Memory in C#/.NET Core. By 
+conducting more than 100 experiments for different HTM configurations, the behavior of system is observed and 
+documented using diagrams to get a vivid overview of dependency of HTM to each of the modified parameters.
+Afterwards, a set of parameters, which have shown the better results of HTM functionality are discussed and proposed.
+Followed by, implementing a [prediction code](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/Experiment.cs#L152)  in the project, which enables HTM system to anticipate the category of an 
+entered test input image.
 
 This project is the implementaiton of the command line interfaca for the image classification based on the Hierarchical Temporal Memory (HTM) implemented in the [necortexapi](https://github.com/ddobric/neocortexapi) repository.
 
+## Input DataSet: **(Hand Drawn Shapes)**
+The images DataSet for training process are chosen from the following link: [DataSetImages](https://www.kaggle.com/abdurrahumaannazeer/handdrawnshapes)
 
-## How to use the classifier?
 
-### 1) Prepare the program's directory:
+They are 60x60 pixles images of Black & White Hand Drawn Shapes. 
+![Input1](https://user-images.githubusercontent.com/74245613/159688485-5d11ff47-3b50-4837-8810-042fdd5e1387.JPG)
+
+## METHODS
+
+ we focused on changing various learning parameters to find the best fit that shows image classification. Most important learning parameters are:
+
+1) Potential Radius (PotentialRadius)
+2) Local Area Density (localAreaDensity)
+3) Number of Active Columns per Inhibition Area 
+(NumOfActiveColumnsPerInhArea)
+4) Global Inhibition (GlobalInhibition)
+
+to demonstrate how these parameters influence the learning. 
+
+## HTM Configuration  
+HTM setting of the project can be inputted to the program by means of a .json file [htmconfig.json](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/htmconfig.json). There you can see the above parameters and change them.
+
+
+Multiple experiments can therefore be conducted via changes of parameters in the json file. 
+For a reference on what each parameter does, please refer to []() on [neocortexapi](https://github.com/ddobric/neocortexapi)
+	
+	
+..........................................................................................................................................................................................................................................................................................
+
+**We seperate this Experiments to two seperate parts:**
+1) [First Part](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/Experiments/Variable%20Local%20Area%20Density%20%26%20Potential%20Radious) we had Variable Experiments with Potential Radious and Local Area Densities. 
+2) [Second Part](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/Experiments/Variables%20NumActiveColumnsPerInhArea%20and%20GlobalInhibiton)  had experiments by changing Global/Local Inhibition and NumofActiveColumnsPerInArea.
+
+
+
+
+
+
+
+## Progress of the project
+1) Two different types of Prediction Code is created and are working accurately. This prediction code first read the input test images which are in the [Test Folder](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/TestFolder), then after binarizing them, the similarity of the SDR of input test image will be 
+compared to SDRs of images with wich the system has been trained.
+2) An excel database of output information of the system is created and diagrams for comparison with different Htm Configs was created.
+3) We also added some comments to make the code more readable and easier to understand.
+4) the input test-image path doesnt need to be written completely, but its adressed based on the folder in which the program is running.
+5) We also worked on some warnings of the Ecperiment class and solved them.
+6) based on our limited resources (Personal Laptop) we only used 12 pictures(3 categories each contained 4 input image) for training the system, finding the best HTM config parameters for our prpgram and making he diagrams. But later after setting the best parameters in the [htmconfig.json](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/htmconfig.json) file, we ibcreased the dataset to 30 and run this time to check for the accuracy of [prediction](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/Experiment.cs#L152) part. 
+
+###  Prediction Part :
+
+Below are link to the Prediction code which we wrote to predict to which category the Input test image belongs to.
+https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/d40b281accc17316ca89ceadb6193eab6e3b4224/MySEProject/ImageClassification/Experiment.cs#L127
+
+
+
+## In-Progress
+1) In the next step we are planning to run the application for a wider input data set for training(1000) on Cloud to discover the behavior of system.
+
+
+
+
+
+
+## How to use the application?
+### 1) Clone the repository from GitHub.
+
+### 2) Prepare the program's directory:
  
- Before you start you need to prepare images that are required for the training. Images must be copied in the following folder structure along with the application and the config json:  
+Before you start you need to prepare images that are required for the training. Images must be copied in the following folder structure along with the application and the config json:  
 
  ![](Images/WorkingDirectory.png)
  
-The imagesets are stored inside "InputFolder".  
+The imagesets are stored inside ["InputFolder"](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/InputFolder). 
+
 ![InputInstructions1](https://user-images.githubusercontent.com/74245613/159239100-91f724a9-9e32-4403-b984-ee1dda58215a.JPG)
 
 
 
 
-Please first time after cloning the project, copy this InputFolder and placed it in the shown path:
+Please first time for running the program after cloning the project, copy this InputFolder and placed it in the shown path:
 
 ![InputInstructionss](https://user-images.githubusercontent.com/74245613/159239592-a614ea21-4746-4688-b157-a249fb0a4de9.JPG)
 
@@ -56,10 +100,7 @@ Please first time after cloning the project, copy this InputFolder and placed it
 
 
 
-###  Prediction Part :
 
-Below are link to the Prediction code which we wrote to predict to which category the Input test image belongs to.
-https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/d40b281accc17316ca89ceadb6193eab6e3b4224/MySEProject/ImageClassification/Experiment.cs#L127
 
 
 
@@ -67,25 +108,19 @@ https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/d40b281ac
             
 
 
-### 2) process of giving your input test image to the program:
+### 3) process of giving your desired test image to the program:
 
 
-Test Image is inside the TestFolder in the shown path with the name B.jpg, You can replace it. Just *** name the test-image as "B.jpg" please.
-![TestInstructionss](https://user-images.githubusercontent.com/74245613/159239791-3b76c677-4404-4b96-b679-7334050ec04a.JPG)
+please give the desired Test Images  inside the TestFolder in the shown path:
+
+![TestFolder](https://user-images.githubusercontent.com/74245613/160682907-aa64478d-c372-43eb-96b2-7c8fd87e08fa.JPG)
 
 
 
 
-
- 
-
- Sample input folder of the project can be found [here](https://github.com/MahdiehPirmoradian/neocortexapi-classification/tree/main/ImageClassification/ImageClassification/InputFolder)  
+### Results of Prediction Part:
   
- 
- **HTM Configuration**  
- HTM setting of the project can be inputted to the program by means of a .json file [htmconfig.json](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/main/ImageClassification/ImageClassification/htmconfig.json).  
- Multiple experiments can therefore be conducted via changes of parameters in the json file. 
- For a reference on what each parameter does, please refer to []() on [neocortexapi](https://github.com/ddobric/neocortexapi) 
+  
  
 ### The best output for LocalAreaDensity and PotentialRadius is shown here
  
@@ -100,3 +135,34 @@ Test Image is inside the TestFolder in the shown path with the name B.jpg, You c
 ### The best output for NumActiveColumnsPerInhArea PotentialRadius is shown here
 
 ![bedune khatte-local- NumActive-30-PotRad-20](https://user-images.githubusercontent.com/77645707/159194666-1ebc1f2b-0003-431b-a301-61494cec47b8.jpg)
+
+### After Increasing the number of Input images
+After Increasing the number of Input images we get some high values for Macro values of some categories which was not desired:
+
+
+
+**Input similaity:**
+
+![1](https://user-images.githubusercontent.com/74245613/160682070-e26ccd70-ea3e-4fed-97fb-b6b1f04c69db.JPG)
+
+
+
+
+
+
+**Output similaity:**
+
+![11](https://user-images.githubusercontent.com/74245613/160682036-20a59c0c-75f0-4cbb-9d2a-0cc0cfb11b81.JPG)
+
+
+
+### Results
+
+![2](https://user-images.githubusercontent.com/74245613/160682554-5ba7333f-8ceb-4784-a73c-8de11700a858.JPG)
+
+![3](https://user-images.githubusercontent.com/74245613/160682577-de392810-fd77-42e8-9da9-a43237b5365d.JPG)
+
+
+
+
+
