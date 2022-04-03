@@ -134,8 +134,7 @@ please give the desired Test Images  inside the TestFolder in the shown path:
 After Increasing the number of Input images we get some high values for Macro values of some categories which was not desired:
 
 
-### Prediction For this Test files
-![T](https://user-images.githubusercontent.com/74245613/161414831-c9977a28-4422-4444-b936-e50214af99d1.JPG)
+### Prediction For the above mentioned Test files
 
 
 
