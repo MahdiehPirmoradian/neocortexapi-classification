@@ -131,7 +131,7 @@ please give the desired Test Images  inside the TestFolder in the shown path:
 
 
 ### After Increasing the number of Input images
-After Increasing the number of Input images we get some high values for Macro values of some categories which was not desired:
+
 
 
 ### Prediction For the above mentioned Test files
