@@ -12,6 +12,7 @@ namespace ConsoleApp
         {
             Dictionary<string, Dictionary<string, double>> statistics = new Dictionary<string, Dictionary<string, double>>();
             var filtered = correlationInfo.ToDictionary(p => p.Key, p => p.Value);
+
             foreach (string label1 in classes)
             {
                 foreach (string label2 in classes)
@@ -125,7 +126,7 @@ namespace ConsoleApp
         /// <param name="correlationInfo">correlation matrix dictionary with key as class1__class2</param>
         /// <param name="mode">either "micro";"macro" or "all"</param>
         /// <param name="classes">the classes that are being evaluated</param>
-        public void printSimilarityMatrix(Dictionary<string,double> correlationInfo, string mode, List<string> classes)
+        public void printSimilarityMatrix(Dictionary<string,double> correlationInfo, Dictionary<string, double> correlationInputInfo, string mode, List<string> classes)
         {
             List<ConsoleColor> colorOrder = new List<ConsoleColor>{ ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.Yellow, ConsoleColor.Red};
             if (mode == "micro")
@@ -269,6 +270,7 @@ namespace ConsoleApp
             else if (mode == "both")
             {
                 var matrix = GetStatistics(correlationInfo, classes);
+                var matrixIn = GetStatistics(correlationInputInfo, classes);
                 // variables for table printing
                 string tempKey = $"{classes[0]}__{classes[1]}";
                 int firstColLength = 20;
@@ -292,13 +294,30 @@ namespace ConsoleApp
                 heading += "|";
                 Console.WriteLine(heading);
 
+                Console.WriteLine(dashLine);
+                List<string> header = new List<string> { "Output", "Input" };
+
+
+                // Printing Second headings {Output & Input}
+                string headingIO = string.Format("|{0,-20}", " ");
+                foreach (var classLabel in classes)
+                {
+                    foreach (var headerL in header)
+                    {
+                        headingIO += string.Format("|{0,-12}", headerL);
+                    }
+                }
+                headingIO += "|";
+                Console.WriteLine(headingIO);
+
                 // Printing the table
                 List<string> corrTable = new List<string>();
+                List<string> corrTableI = new List<string>();
                 int tableIndex = 0;
+                int tableIndexI = 0;
 
 
-
-                // Printing the first classes collumn
+                // Printing the first classes collumn of Output
                 for (int i = 0; i < classes.Count; i += 1)
                 {
                     foreach (var statValue in matrix[tempKey])
@@ -315,30 +334,74 @@ namespace ConsoleApp
                     }
                 }
 
+                // Printing the first classes collumn of Input
+                for (int i = 0; i < classes.Count; i += 1)
+                {
+                    foreach (var statValue in matrixIn[tempKey])
+                    {
+                        if (tableIndex == (int)((double)matrix[tempKey].Count * ((double)i + 0.5)))
+                        {
+                            corrTableI.Add(string.Format("|{0,-20}", classes[i]));
+                        }
+                        else
+                        {
+                            corrTableI.Add(string.Format("|{0,-20}", ""));
+                        }
+                        tableIndex += 1;
+                    }
+                }
+
+
                 foreach (string classLabel1 in classes)
                 {
                     tableIndex = 0;
+                    tableIndexI = 0;
                     foreach (string classLabel2 in classes)
                     {
                         if (classLabel1 != classLabel2)
                         {
                             foreach (var statValue in matrix[$"{ classLabel1}__{classLabel2 }"])
-                            {
-
-                                corrTable[tableIndex] += String.Format("|{0,-25}", $"{statValue.Key} {statValue.Value}");
+                            { 
+                                corrTable[tableIndex] += String.Format("|{0,-12}", $"{statValue.Key} {statValue.Value}");
                                 tableIndex += 1;
                             }
+                            
                         }
                         else
                         {
                             foreach (var statValue in matrix[$"{ classLabel1}__{classLabel2 }"])
                             {
-
-                                corrTable[tableIndex] += String.Format(">|{0,-25}<", $"{statValue.Key} {statValue.Value}");
+                                corrTable[tableIndex] += String.Format(">|{0,-12}", $"{statValue.Key} {statValue.Value}");
                                 tableIndex += 1;
                             }
+                            
                         }
                     }
+                    //For Input
+                    foreach (string classLabel2 in classes)
+                    {
+                        if (classLabel1 != classLabel2)
+                        {
+                            
+                            foreach (var statValue in matrixIn[$"{ classLabel1}__{classLabel2 }"])
+                            {
+                                corrTable[tableIndexI] += String.Format("|{0,-12}", $"{statValue.Key} {statValue.Value}");
+                                tableIndexI += 1;
+                            }
+                            
+                        }
+                        else
+                        {
+                            
+                            foreach (var statValue in matrixIn[$"{ classLabel1}__{classLabel2 }"])
+                            {
+                                corrTable[tableIndexI] += String.Format("|{0,-12}<", $"{statValue.Key} {statValue.Value}");
+                                tableIndexI += 1;
+                            }
+                            
+                        }
+                    }
+
                 }
                 // Adding the last closing to the lines
                 tableIndex = 0;
