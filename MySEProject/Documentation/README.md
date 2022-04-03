@@ -6,7 +6,7 @@ The primary goal was to investigate open-source implementation of the Hierarchic
 conducting more than 100 experiments for different HTM configurations, the behavior of system is observed and 
 documented using diagrams to get a vivid overview of dependency of HTM to each of the modified parameters.
 Afterwards, a set of parameters, which have shown the better results of HTM functionality are discussed and proposed.
-Followed by, implementing a [prediction code](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/Experiment.cs#L152)  in the project, which enables HTM system to anticipate the category of an 
+Followed by, implementing a [prediction code](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/167ab147593348c16c4813e33e2d91be72a928db/MySEProject/ImageClassification/Experiment.cs#L153)  in the project, which enables HTM system to anticipate the category of an 
 entered test input image.
 
 This project is the implementaiton of the command line interfaca for the image classification based on the Hierarchical Temporal Memory (HTM) implemented in the [necortexapi](https://github.com/ddobric/neocortexapi) repository.
@@ -57,13 +57,12 @@ compared to SDRs of images with wich the system has been trained.
 3) We also added some comments to make the code more readable and easier to understand.
 4) the input test-image path doesnt need to be written completely, but its adressed based on the folder in which the program is running.
 5) We also worked on some warnings of the Ecperiment class and solved them.
-6) based on our limited resources (Personal Laptop) we only used 12 pictures(3 categories each contained 4 input image) for training the system, finding the best HTM config parameters for our prpgram and making he diagrams. But later after setting the best parameters in the [htmconfig.json](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/htmconfig.json) file, we ibcreased the dataset to 30 and run this time to check for the accuracy of [prediction](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/Experiment.cs#L152) part. 
+6) based on our limited resources (Personal Laptop) we only used 12 pictures(3 categories each contained 4 input image) for training the system, finding the best HTM config parameters for our prpgram and making he diagrams. But later after setting the best parameters in the [htmconfig.json](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/ba8334a45c8ae552217be5ca6b219f4b692a470f/MySEProject/ImageClassification/htmconfig.json) file, we ibcreased the dataset to 30 and run this time to check for the accuracy of [prediction](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/167ab147593348c16c4813e33e2d91be72a928db/MySEProject/ImageClassification/Experiment.cs#L153) part. 
 
 ###  Prediction Part :
 
 Below are link to the Prediction code which we wrote to predict to which category the Input test image belongs to.
-https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/d40b281accc17316ca89ceadb6193eab6e3b4224/MySEProject/ImageClassification/Experiment.cs#L127
-
+https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/167ab147593348c16c4813e33e2d91be72a928db/MySEProject/ImageClassification/Experiment.cs#L153
 
 
 ## In-Progress
