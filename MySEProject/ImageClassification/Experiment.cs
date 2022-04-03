@@ -88,15 +88,16 @@ namespace ConsoleApp
 
 
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
-            //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
+           //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
 
-            //showing Correlation Matrix of Image Categories before of training
-            Console.WriteLine("Correlation Matrix of Images Categories before of training is shown below");
-            helperFunc.printSimilarityMatrix(listInputCorrelation, "both", classes);
+            
 
-            //showing Correlation Matrix of Image Categories after training
-            Console.WriteLine("Correlation Matrix of Images Categories after of training with HTM is shown below");
-            helperFunc.printSimilarityMatrix(listCorrelation, "both", classes);
+            Console.WriteLine("Correlation Matrix of Images Categories OUTPUT & INPUT is shown below");
+            helperFunc.printSimilarityMatrix(listCorrelation, listInputCorrelation, "both", classes);
+
+
+
+        
 
 
 
@@ -138,7 +139,7 @@ namespace ConsoleApp
 
                 var sdrOfInputImage = activeColumns.OrderBy(c => c).ToArray();
                 // calling the prediction function for Printing out Name of the category to which the
-                // input Test Image has te most smilarity
+                // input Test Image has the most smilarity
                 string predictedLabel = PredictLabel(sdrOfInputImage, sdrs);
                 Console.WriteLine($"Input Test Image {testfilesname} is predicted as {predictedLabel}\n");
                 Console.WriteLine("**********************************************************************************");
@@ -231,7 +232,7 @@ namespace ConsoleApp
 
                 if (maxPredictedSimilarity < 40)
                 {
-                    Console.WriteLine("This Image does not belong to any category of trained images ");
+                    Console.WriteLine("\nThis Image does not belong to any category of trained images ");
                     predictedLableCat = " non trained Input Category";
                 }
                 //printing the highest similarity of the Input_Tested_Image with the previous Trained_Images category
