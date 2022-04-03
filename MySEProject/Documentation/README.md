@@ -124,43 +124,29 @@ please give the desired Test Images  inside the TestFolder in the shown path:
  
 ### The best output for LocalAreaDensity and PotentialRadius is shown here
  
- ![image](https://github.com/MahdiehPirmoradian/neocortexapi-classification/blob/main/MySEProject/Experiments/Variable%20Local%20Area%20Density%20%26%20Potential%20Radious/Best%20Experiment%20Variable%20Local%20AreaDensity%26PotentialRadious.JPG)
+
+![IN](https://user-images.githubusercontent.com/74245613/161414574-60b19803-7e25-4e1d-bdd8-dab2dcd5aa37.JPG)
 
 
 
 
-
-
-
-### The best output for NumActiveColumnsPerInhArea PotentialRadius is shown here
-
-![bedune khatte-local- NumActive-30-PotRad-20](https://user-images.githubusercontent.com/77645707/159194666-1ebc1f2b-0003-431b-a301-61494cec47b8.jpg)
 
 ### After Increasing the number of Input images
 After Increasing the number of Input images we get some high values for Macro values of some categories which was not desired:
 
 
+### Prediction For this Test files
+![T](https://user-images.githubusercontent.com/74245613/161414831-c9977a28-4422-4444-b936-e50214af99d1.JPG)
 
-**Input similaity:**
-
-![1](https://user-images.githubusercontent.com/74245613/160682070-e26ccd70-ea3e-4fed-97fb-b6b1f04c69db.JPG)
-
-
-
-
-
-
-**Output similaity:**
-
-![11](https://user-images.githubusercontent.com/74245613/160682036-20a59c0c-75f0-4cbb-9d2a-0cc0cfb11b81.JPG)
 
 
 
 ### Results
+![pp1](https://user-images.githubusercontent.com/74245613/161414864-de1f7507-dd1b-4aa2-a3f3-dd1cfc167bc0.JPG)
 
-![2](https://user-images.githubusercontent.com/74245613/160682554-5ba7333f-8ceb-4784-a73c-8de11700a858.JPG)
+![pp2](https://user-images.githubusercontent.com/74245613/161414869-363b234c-b1a4-4962-8709-c9538588f05b.JPG)
 
-![3](https://user-images.githubusercontent.com/74245613/160682577-de392810-fd77-42e8-9da9-a43237b5365d.JPG)
+
 
 
 
