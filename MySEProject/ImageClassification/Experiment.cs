@@ -88,16 +88,16 @@ namespace ConsoleApp
 
 
             //helperFunc.printSimilarityMatrix(listCorrelation, "micro", classes);
-           //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
+            //helperFunc.printSimilarityMatrix(listCorrelation, "macro", classes);
 
-            
+
 
             Console.WriteLine("Correlation Matrix of Images Categories OUTPUT & INPUT is shown below");
             helperFunc.printSimilarityMatrix(listCorrelation, listInputCorrelation, "both", classes);
 
 
 
-        
+
 
 
 
